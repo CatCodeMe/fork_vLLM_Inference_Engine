@@ -17,4 +17,7 @@ docs/figures/demo_*
 web/node_modules/
 web/.next/
 web/out/
+
+# Vercel CLI 本地链接目录（`vercel link` 生成，含 projectId/orgId，不该入库）
+.vercel/
 web/.env*.local
