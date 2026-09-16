@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="1180" height="600" viewBox="0 0 1180 600" content="&lt;mxfile host=&quot;vscode&quot; version=&quot;24.7.17&quot; type=&quot;device&quot;&gt;
+  &lt;diagram id=&quot;who-computes-kv&quot; name=&quot;KV 是谁算出来的&quot;&gt;
+    &lt;mxGraphModel dx=&quot;1200&quot; dy=&quot;900&quot; grid=&quot;1&quot; gridSize=&quot;10&quot; guides=&quot;1&quot; tooltips=&quot;1&quot; connect=&quot;1&quot; arrows=&quot;1&quot; fold=&quot;1&quot; page=&quot;1&quot; pageScale=&quot;1&quot; pageWidth=&quot;1180&quot; pageHeight=&quot;600&quot; math=&quot;0&quot; shadow=&quot;0&quot;&gt;
+      &lt;root&gt;
+        &lt;mxCell id=&quot;0&quot;/&gt;
+        &lt;mxCell id=&quot;1&quot; parent=&quot;0&quot;/&gt;
+        &lt;mxCell id=&quot;v1&quot; value=&quot;&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#F8F9FA;strokeColor=#4285F4;fontColor=#202124;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;40&quot; y=&quot;40&quot; width=&quot;520&quot; height=&quot;420&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v2&quot; value=&quot;每个 attention 层做两次线性投影：&amp;amp;#10;k = x @ W_k    (896 → 128)&amp;amp;#10;v = x @ W_v    (896 → 128)&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#4285F4;fontColor=#202124;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;70&quot; y=&quot;92&quot; width=&quot;460&quot; height=&quot;96&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v3&quot; value=&quot;形状（每个 token）：&amp;amp;#10;[1, num_kv_heads=2, seq_len, head_dim=64]&amp;amp;#10;→ 每 token 每层 512 bytes&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#4285F4;fontColor=#202124;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;70&quot; y=&quot;204&quot; width=&quot;460&quot; height=&quot;96&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v4&quot; value=&quot;24 层各自算完后，HF 把它们收集成&amp;amp;#10;outputs.past_key_values&amp;amp;#10;（DynamicCache 或 tuple-of-tuples）&amp;amp;#10;&amp;amp;#10;→ 这是 KV 【被计算】的唯一地方&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F0FE;strokeColor=#4285F4;fontColor=#174EA6;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;70&quot; y=&quot;316&quot; width=&quot;460&quot; height=&quot;120&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v5&quot; value=&quot;&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#F8F9FA;strokeColor=#34A853;fontColor=#202124;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;620&quot; y=&quot;40&quot; width=&quot;520&quot; height=&quot;420&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v6&quot; value=&quot;① _extract_kv_layer(past_kv, layer_idx)&amp;amp;#10;从 HF 的 past_key_values 里&amp;quot;读&amp;quot;出一层的 (K, V)&amp;amp;#10;兼容 3 种 HF 格式，纯读取&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#34A853;fontColor=#0D652D;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;650&quot; y=&quot;92&quot; width=&quot;460&quot; height=&quot;96&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v7&quot; value=&quot;② paged_kv_cache.write_kv(seq, layer, global_pos, k, v)&amp;amp;#10;把这份 KV 拷进 pool（按块索引）&amp;amp;#10;同样是拷贝，不是计算&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#34A853;fontColor=#0D652D;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;650&quot; y=&quot;204&quot; width=&quot;460&quot; height=&quot;96&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v8&quot; value=&quot;引擎【从不】计算 KV&amp;amp;#10;&amp;amp;#10;它只做两件事：把 KV 从 HF 的 cache 里搬出来，&amp;amp;#10;再按块摆进自己的 pool。&amp;amp;#10;所以 §3 说&amp;quot;引擎不做张量数学&amp;quot;。&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#E6F4EA;strokeColor=#34A853;fontColor=#0D652D;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;650&quot; y=&quot;316&quot; width=&quot;460&quot; height=&quot;120&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e9&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#8D6E63;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;560&quot; y=&quot;250&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;620&quot; y=&quot;250&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v10&quot; value=&quot;⚠️ 这也是本仓库和真 vLLM 最大的区别&amp;amp;#10;真 vLLM 的 PagedAttention kernel 直接按块读 KV 做注意力，pool 参与计算；&amp;amp;#10;本仓库是把 KV 读回来【重建成 HF 的 past_key_values】再走普通 attention —— pool 只负责&amp;quot;存&amp;quot;，不参与&amp;quot;算&amp;quot;。&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FEF7E0;strokeColor=#F9AB00;fontColor=#8A5A00;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;40&quot; y=&quot;486&quot; width=&quot;1100&quot; height=&quot;92&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+      &lt;/root&gt;
+    &lt;/mxGraphModel&gt;
+  &lt;/diagram&gt;
+&lt;/mxfile&gt;" style="background-color: transparent;">
+  <rect x="40" y="40" width="520" height="420" rx="8" ry="8" fill="#F8F9FA" stroke="#4285F4" />
+  <text x="300" y="68" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#174EA6">模型内部　model.forward()</text>
+  <rect x="70" y="92" width="460" height="96" rx="6" ry="6" fill="#FFFFFF" stroke="#4285F4" />
+  <text x="300.0" y="127.3964" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11.5" font-weight="bold" text-anchor="middle" fill="#202124">每个 attention 层做两次线性投影：</text>
+  <text x="300.0" y="145.3946" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="normal" text-anchor="middle" fill="#202124">k = x @ W_k    (896 → 128)</text>
+  <text x="300.0" y="163.2146" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="normal" text-anchor="middle" fill="#202124">v = x @ W_v    (896 → 128)</text>
+  <rect x="70" y="204" width="460" height="96" rx="6" ry="6" fill="#FFFFFF" stroke="#4285F4" />
+  <text x="300.0" y="239.3964" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11.5" font-weight="bold" text-anchor="middle" fill="#202124">形状（每个 token）：</text>
+  <text x="300.0" y="257.3946" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="normal" text-anchor="middle" fill="#202124">[1, num_kv_heads=2, seq_len, head_dim=64]</text>
+  <text x="300.0" y="275.2146" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="normal" text-anchor="middle" fill="#202124">→ 每 token 每层 512 bytes</text>
+  <rect x="70" y="316" width="460" height="120" rx="6" ry="6" fill="#E8F0FE" stroke="#4285F4" />
+  <text x="300.0" y="350.0314" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11.5" font-weight="bold" text-anchor="middle" fill="#174EA6">24 层各自算完后，HF 把它们收集成</text>
+  <text x="300.0" y="368.6614" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11.5" font-weight="normal" text-anchor="middle" fill="#174EA6">outputs.past_key_values</text>
+  <text x="300.0" y="386.02779999999996" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#174EA6">（DynamicCache 或 tuple-of-tuples）</text>
+  <text x="300.0" y="396.088" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="5" font-weight="normal" text-anchor="middle" fill="#174EA6"></text>
+  <text x="300.0" y="412.4014" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11.5" font-weight="normal" text-anchor="middle" fill="#174EA6">→ 这是 KV 【被计算】的唯一地方</text>
+  <rect x="620" y="40" width="520" height="420" rx="8" ry="8" fill="#F8F9FA" stroke="#34A853" />
+  <text x="880" y="68" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#0D652D">引擎侧　scheduler.py</text>
+  <rect x="650" y="92" width="460" height="96" rx="6" ry="6" fill="#FFFFFF" stroke="#34A853" />
+  <text x="880.0" y="128.2064" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11.5" font-weight="bold" text-anchor="middle" fill="#0D652D">① _extract_kv_layer(past_kv, layer_idx)</text>
+  <text x="880.0" y="145.5728" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#0D652D">从 HF 的 past_key_values 里"读"出一层的 (K, V)</text>
+  <text x="880.0" y="162.5828" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#0D652D">兼容 3 种 HF 格式，纯读取</text>
+  <rect x="650" y="204" width="460" height="96" rx="6" ry="6" fill="#FFFFFF" stroke="#34A853" />
+  <text x="880.0" y="239.7528" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="bold" text-anchor="middle" fill="#0D652D">② paged_kv_cache.write_kv(seq, layer, global_pos, k, v)</text>
+  <text x="880.0" y="256.76279999999997" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#0D652D">把这份 KV 拷进 pool（按块索引）</text>
+  <text x="880.0" y="273.77279999999996" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#0D652D">同样是拷贝，不是计算</text>
+  <rect x="650" y="316" width="460" height="120" rx="6" ry="6" fill="#E6F4EA" stroke="#34A853" />
+  <text x="880.0" y="351.0682" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#0D652D">引擎【从不】计算 KV</text>
+  <text x="880.0" y="361.663" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="5" font-weight="normal" text-anchor="middle" fill="#0D652D"></text>
+  <text x="880.0" y="377.3446" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="normal" text-anchor="middle" fill="#0D652D">它只做两件事：把 KV 从 HF 的 cache 里搬出来，</text>
+  <text x="880.0" y="395.1646" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="normal" text-anchor="middle" fill="#0D652D">再按块摆进自己的 pool。</text>
+  <text x="880.0" y="412.35279999999995" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#0D652D">所以 §3 说"引擎不做张量数学"。</text>
+  <polyline points="560,250 620,250" fill="none" stroke="#8D6E63" stroke-width="1.6" />
+  <polygon points="620,250 611,245 611,255" fill="#8D6E63" />
+  <text x="590" y="232" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10" font-weight="normal" text-anchor="middle" fill="#8D6E63">outputs
+.past_key_values</text>
+  <rect x="40" y="486" width="1100" height="92" rx="6" ry="6" fill="#FEF7E0" stroke="#F9AB00" />
+  <text x="590.0" y="520.2064" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11.5" font-weight="bold" text-anchor="middle" fill="#8A5A00">⚠️ 这也是本仓库和真 vLLM 最大的区别</text>
+  <text x="590.0" y="537.5728" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#8A5A00">真 vLLM 的 PagedAttention kernel 直接按块读 KV 做注意力，pool 参与计算；</text>
+  <text x="590.0" y="554.5828" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#8A5A00">本仓库是把 KV 读回来【重建成 HF 的 past_key_values】再走普通 attention —— pool 只负责"存"，不参与"算"。</text>
+</svg>

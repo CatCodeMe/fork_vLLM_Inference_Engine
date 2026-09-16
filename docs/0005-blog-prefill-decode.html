@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>从一次 generate() 看 LLM 推理引擎在做什么</title>
+
+<!-- KaTeX（数学公式）与 marked（Markdown）走 CDN -->
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer
+        src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+
+<style>
+  :root { color-scheme: light dark; }
+  body {
+    max-width: 860px; margin: 0 auto; padding: 2.5rem 1.2rem 6rem;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+                 "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    line-height: 1.78; font-size: 16px;
+  }
+  h1 { font-size: 1.9rem; line-height: 1.3; }
+  h2 { margin-top: 2.6rem; border-bottom: 1px solid #8884; padding-bottom: .3rem; }
+  h3 { margin-top: 2rem; }
+  h4 { margin-top: 1.4rem; }
+  code {
+    background: #8881; padding: .12em .35em; border-radius: 4px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: .9em;
+  }
+  pre { background: #8881; padding: 1rem; border-radius: 8px; overflow-x: auto; }
+  pre code { background: none; padding: 0; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+  th, td { border: 1px solid #8884; padding: .45rem .6rem; text-align: left; }
+  blockquote {
+    margin: 1rem 0; padding: .4rem 1rem; border-left: 4px solid #8884;
+    opacity: .88;
+  }
+  .katex-display { overflow-x: auto; overflow-y: hidden; padding: .2rem 0; }
+  #status { color: #888; }
+  #fallback {
+    display: none; padding: 1rem; border: 1px solid #e0a; border-radius: 8px;
+    background: #e0a1; white-space: pre-wrap;
+  }
+</style>
+</head>
+<body>
+<div id="status">正在加载…</div>
+<article id="content"></article>
+<div id="fallback"></div>
+
+<script>
+// ────────────────────────────────────────────────────────────────────────────
+// 关键：Markdown 会把公式里的下划线 `_`（如 softmax(z)_i、\sum_{j=1}）
+// 误当成斜体标记，从而破坏 LaTeX。所以先把公式“抠出来”存好，用占位符
+// 代替，等 marked 解析完再把原文放回去，最后交给 KaTeX 渲染。
+// 同时跳过 ```代码块``` 和 `行内代码`，避免误伤。
+// ────────────────────────────────────────────────────────────────────────────
+function escapeHtml(s) {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+function protectMath(markdown) {
+  const stash = [];
+  const stashMath = (seg) =>
+    seg.replace(/\$\$([\s\S]+?)\$\$|\$([^\n$]+?)\$/g, (match) => {
+      const key = "@@MATH" + stash.length + "@@";
+      stash.push(match);
+      return key;
+    });
+
+  // 按 ```代码块``` 切分：代码段原样保留，非代码段再按 `行内代码` 切分
+  const out = markdown
+    .split(/(```[\s\S]*?```)/g)
+    .map((part) => {
+      if (part.startsWith("```")) return part;           // 代码块：不处理
+      return part
+        .split(/(`[^`\n]*`)/g)
+        .map((seg) => (seg.startsWith("`") ? seg : stashMath(seg)))
+        .join("");
+    })
+    .join("");
+
+  return { text: out, stash };
+}
+
+window.addEventListener("load", async () => {
+  const status = document.getElementById("status");
+  const content = document.getElementById("content");
+  try {
+    if (typeof marked === "undefined" || typeof renderMathInElement === "undefined") {
+      throw new Error("CDN 脚本未加载（可能是网络/代理问题）");
+    }
+    const params = new URLSearchParams(location.search);
+    const docFile = params.get("doc") || "0005-blog-prefill-decode.md";
+    const res = await fetch("./" + docFile);
+    if (!res.ok) throw new Error("HTTP " + res.status + " (" + docFile + ")");
+    const md = await res.text();
+
+    const { text, stash } = protectMath(md);
+    let html = marked.parse(text);
+
+    // 把占位符换回公式原文（转义 HTML 特殊字符，交给 KaTeX 读文本）
+    html = html.replace(/@@MATH(\d+)@@/g, (_, i) => escapeHtml(stash[Number(i)]));
+    content.innerHTML = html;
+    status.remove();
+
+    renderMathInElement(content, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "\\[", right: "\\]", display: true },
+        { left: "$",  right: "$",  display: false },
+        { left: "\\(", right: "\\)", display: false },
+      ],
+      throwOnError: false,
+      ignoredTags: ["script", "noscript", "style", "textarea", "pre", "code", "option"],
+    });
+  } catch (err) {
+    status.style.display = "none";
+    const fb = document.getElementById("fallback");
+    fb.style.display = "block";
+    fb.textContent =
+      "无法在此页面渲染：" + err.message + "\n\n" +
+      "原因通常是：\n" +
+      "  1) 直接用 file:// 打开时，浏览器会拦截 fetch 本地 .md（CORS）。\n" +
+      "  2) CDN 被代理/网络拦截。\n" +
+      "  3) ?doc= 指定的文件不存在。\n\n" +
+      "解决办法（任选其一）：\n" +
+      "  A. 在 docs/ 目录下启动本地服务器，再访问本页：\n" +
+      "       python3 -m http.server 8080\n" +
+      "       http://localhost:8080/0005-blog-prefill-decode.html            （默认博客）\n" +
+      "       http://localhost:8080/0005-blog-prefill-decode.html?doc=0008-attention-variants.md\n" +
+      "  B. 直接在 VS Code 里用 Markdown Preview Enhanced 预览对应的 .md（它原生支持 $...$）。";
+  }
+});
+</script>
+</body>
+</html>

@@ -18,6 +18,8 @@
 
 </div>
 
+> 🌏 **中文说明在这里：[`README.zh-CN.md`](README.zh-CN.md)** —— 本 fork 在这一版之上加了中文学习注释、一套中文文档和调试工具链。
+
 ---
 
 ## 🎯 The Problem
@@ -229,6 +231,72 @@ Submits a prompt for token generation. Blocks until generation is complete.
     "timestamp": "2026-06-24T00:44:00Z"
   }
   ```
+
+---
+
+### GET `/trace`
+
+Returns the scheduler's recent trace ring buffer (numbered `[REQ]` / `[step NNN]` entries),
+so you can follow one request through the whole lifecycle without digging into server logs.
+
+- **URL**: `http://localhost:8001/trace?limit=200`
+- **Method**: `GET`
+- **Response**:
+  ```json
+  {
+    "step": 10,
+    "buffered": 52,
+    "returned": 2,
+    "entries": [
+      {"tag": "[step 010]", "step": 10, "stage": "7/8 finish",  "seq": "6f37e113...", "msg": "..."},
+      {"tag": "[REQ]",      "step": null, "stage": "8/8 \u8fd4\u56de", "seq": "6f37e113...", "msg": "..."}
+    ]
+  }
+  ```
+- **Two labels, two meanings**:
+  - `N/8` — position in **one request's lifecycle** (8 fixed steps):
+    `1/8 received → 2/8 enqueued → 3/8 step/swap → 4/8 admit → 5/8 prefill`
+    `→ 6/8 decode → 7/8 finish → 8/8 returned`
+  - `[step NNN]` — the scheduler's loop counter (which requests share one step)
+  `scripts/demo_phase2.py` fetches this endpoint and prints a summary automatically.
+
+---
+
+### GET `/spans`
+
+Returns a **span tree** (OTel-style) for recently handled requests — parent/child spans with
+`start_ms` / `dur_ms`, so you can render a waterfall instead of reading a log.
+
+- **URL**: `http://localhost:8001/spans?limit=5&max_children=64`
+- **Method**: `GET`
+- **Span shape**:
+  ```
+  request                      attrs: state, finish_reason, prompt_tokens, generated_tokens, ttft_ms
+    ├─ queue_wait
+    ├─ prefill                 attrs: chunks, prompt_tokens
+    │    ├─ chunk#0 … chunk#N
+    └─ decode                  attrs: tokens
+         ├─ token#0 … token#N
+  ```
+- **Difference from `/trace`**: `/trace` is a flat **event log** (ordered, greppable);
+  `/spans` is a **tree** (shaped for waterfall views / tracing UIs).
+  `scripts/demo_phase2.py` fetches it and draws a text waterfall.
+- **No hot-path instrumentation**: spans are derived from timestamps already stored on
+  `Sequence`, so enabling them costs nothing.
+
+---
+
+### Interactive API docs
+
+FastAPI's built-in UI is enabled:
+
+| URL | What |
+| --- | --- |
+| `http://localhost:8001/docs` | **Swagger UI** — click `POST /generate` → `Try it out` → `Execute` |
+| `http://localhost:8001/redoc` | ReDoc (read-only, nicer typography) |
+| `http://localhost:8001/openapi.json` | raw OpenAPI schema |
+
+> Port follows the server: Phase 1 is `:8000`, Phase 2 is `:8001`.
 
 ---
 

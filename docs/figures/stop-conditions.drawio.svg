@@ -1,0 +1,169 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="1120" height="680" viewBox="0 0 1120 680" content="&lt;mxfile host=&quot;vscode&quot; version=&quot;24.7.17&quot; type=&quot;device&quot;&gt;
+  &lt;diagram id=&quot;stop-conditions&quot; name=&quot;生成停止判定流程&quot;&gt;
+    &lt;mxGraphModel dx=&quot;1200&quot; dy=&quot;900&quot; grid=&quot;1&quot; gridSize=&quot;10&quot; guides=&quot;1&quot; tooltips=&quot;1&quot; connect=&quot;1&quot; arrows=&quot;1&quot; fold=&quot;1&quot; page=&quot;1&quot; pageScale=&quot;1&quot; pageWidth=&quot;1120&quot; pageHeight=&quot;680&quot; math=&quot;0&quot; shadow=&quot;0&quot;&gt;
+      &lt;root&gt;
+        &lt;mxCell id=&quot;0&quot;/&gt;
+        &lt;mxCell id=&quot;1&quot; parent=&quot;0&quot;/&gt;
+        &lt;mxCell id=&quot;v1&quot; value=&quot;产生一个 token&amp;amp;#10;（来自 prefill 或 decode step）&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#F1F3F4;strokeColor=#9AA0A6;fontColor=#3C4043;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;70&quot; y=&quot;40&quot; width=&quot;320&quot; height=&quot;56&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v2&quot; value=&quot;token == eos_token_id ?&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#34A853;fontColor=#202124;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;70&quot; y=&quot;150&quot; width=&quot;320&quot; height=&quot;54&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e3&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#34A853;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;390&quot; y=&quot;177&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;480&quot; y=&quot;177&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v4&quot; value=&quot;finish_reason = &amp;quot;eos&amp;quot;&amp;amp;#10;state = finished&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#E6F4EA;strokeColor=#34A853;fontColor=#0D652D;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;480&quot; y=&quot;150&quot; width=&quot;300&quot; height=&quot;54&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v5&quot; value=&quot;len(generated_token_ids) &amp;gt;= max_new_tokens ?&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#F9AB00;fontColor=#202124;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;70&quot; y=&quot;250&quot; width=&quot;320&quot; height=&quot;54&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e6&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#F9AB00;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;390&quot; y=&quot;277&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;480&quot; y=&quot;277&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v7&quot; value=&quot;finish_reason = &amp;quot;length&amp;quot;&amp;amp;#10;state = finished&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#E6F4EA;strokeColor=#F9AB00;fontColor=#0D652D;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;480&quot; y=&quot;250&quot; width=&quot;300&quot; height=&quot;54&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v8&quot; value=&quot;命中 stop 序列 ?&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#5F6368;fontColor=#202124;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;70&quot; y=&quot;350&quot; width=&quot;320&quot; height=&quot;54&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e9&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#5F6368;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;390&quot; y=&quot;377&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;480&quot; y=&quot;377&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v10&quot; value=&quot;finish_reason = &amp;quot;stop&amp;quot;&amp;amp;#10;state = finished&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#F1F3F4;strokeColor=#5F6368;fontColor=#3C4043;fontSize=12;dashed=1;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;480&quot; y=&quot;350&quot; width=&quot;300&quot; height=&quot;54&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e11&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#5F6368;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;230&quot; y=&quot;204&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;230&quot; y=&quot;250&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e12&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#5F6368;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;230&quot; y=&quot;304&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;230&quot; y=&quot;350&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e13&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#5F6368;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;230&quot; y=&quot;404&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;230&quot; y=&quot;450&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v14&quot; value=&quot;回到 decode step，继续循环&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#E6F4EA;strokeColor=#34A853;fontColor=#0D652D;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;70&quot; y=&quot;450&quot; width=&quot;320&quot; height=&quot;54&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e15&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#5F6368;dashed=1;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;70&quot; y=&quot;477&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;70&quot; y=&quot;68&quot; as=&quot;targetPoint&quot;/&gt;
+            &lt;Array as=&quot;points&quot;&gt;&lt;mxPoint x=&quot;30&quot; y=&quot;477&quot;/&gt;&lt;mxPoint x=&quot;30&quot; y=&quot;68&quot;/&gt;&lt;/Array&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v16&quot; value=&quot;state = finished 之后&amp;amp;#10;&amp;amp;#10;清 paged pool&amp;amp;#10;释放逻辑块&amp;amp;#10;future.set_result(seq)&amp;amp;#10;→ 唤醒 endpoint_generate&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#EFEBE9;strokeColor=#8D6E63;fontColor=#4E342E;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;830&quot; y=&quot;150&quot; width=&quot;250&quot; height=&quot;254&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e17&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#8D6E63;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;780&quot; y=&quot;177&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;830&quot; y=&quot;177&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e18&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#8D6E63;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;780&quot; y=&quot;277&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;830&quot; y=&quot;277&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e19&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#8D6E63;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;780&quot; y=&quot;377&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;830&quot; y=&quot;377&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e20&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#EA4335;dashed=1;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;480&quot; y=&quot;568&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;230&quot; y=&quot;504&quot; as=&quot;targetPoint&quot;/&gt;
+            &lt;Array as=&quot;points&quot;&gt;&lt;mxPoint x=&quot;230&quot; y=&quot;568&quot;/&gt;&lt;/Array&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v21&quot; value=&quot;旁路（不经过上面的判定）&amp;amp;#10;OutOfBlocksError → _try_swap_out_victim() 换出后重试&amp;amp;#10;其他异常 → finish_reason = &amp;quot;error&amp;quot;；块不足且无法换出 → &amp;quot;oom&amp;quot;&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FCE8E6;strokeColor=#EA4335;fontColor=#A50E0E;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;480&quot; y=&quot;520&quot; width=&quot;600&quot; height=&quot;96&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+      &lt;/root&gt;
+    &lt;/mxGraphModel&gt;
+  &lt;/diagram&gt;
+&lt;/mxfile&gt;" style="background-color: transparent;">
+  <rect x="70" y="40" width="320" height="56" rx="6" ry="6" fill="#F1F3F4" stroke="#9AA0A6" />
+  <text x="230.0" y="64.922" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="12.5" font-weight="bold" text-anchor="middle" fill="#3C4043">产生一个 token</text>
+  <text x="230.0" y="83.02387999999999" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.8" font-weight="normal" text-anchor="middle" fill="#3C4043">（来自 prefill 或 decode step）</text>
+  <rect x="70" y="150" width="320" height="54" rx="6" ry="6" fill="#FFFFFF" stroke="#34A853" />
+  <text x="230.0" y="182.2164" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11.5" font-weight="bold" text-anchor="middle" fill="#202124">token == eos_token_id ?</text>
+  <polyline points="390,177 480,177" fill="none" stroke="#34A853" stroke-width="1.6" />
+  <polygon points="480,177 471,172 471,182" fill="#34A853" />
+  <text x="406" y="170" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="start" fill="#34A853">是</text>
+  <rect x="480" y="150" width="300" height="54" rx="6" ry="6" fill="#E6F4EA" stroke="#34A853" />
+  <text x="630.0" y="173.7114" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11.5" font-weight="bold" text-anchor="middle" fill="#0D652D">finish_reason = "eos"</text>
+  <text x="630.0" y="191.0778" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#0D652D">state = finished</text>
+  <rect x="70" y="250" width="320" height="54" rx="6" ry="6" fill="#FFFFFF" stroke="#F9AB00" />
+  <text x="230.0" y="282.2164" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11.5" font-weight="bold" text-anchor="middle" fill="#202124">len(generated_token_ids) &gt;= max_new_tokens ?</text>
+  <polyline points="390,277 480,277" fill="none" stroke="#F9AB00" stroke-width="1.6" />
+  <polygon points="480,277 471,272 471,282" fill="#F9AB00" />
+  <text x="406" y="270" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="start" fill="#F9AB00">是</text>
+  <rect x="480" y="250" width="300" height="54" rx="6" ry="6" fill="#E6F4EA" stroke="#F9AB00" />
+  <text x="630.0" y="273.7114" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11.5" font-weight="bold" text-anchor="middle" fill="#0D652D">finish_reason = "length"</text>
+  <text x="630.0" y="291.07779999999997" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#0D652D">state = finished</text>
+  <rect x="70" y="350" width="320" height="54" rx="6" ry="6" fill="#FFFFFF" stroke="#5F6368" />
+  <text x="230.0" y="382.2164" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11.5" font-weight="bold" text-anchor="middle" fill="#202124">命中 stop 序列 ?</text>
+  <polyline points="390,377 480,377" fill="none" stroke="#5F6368" stroke-width="1.6" />
+  <polygon points="480,377 471,372 471,382" fill="#5F6368" />
+  <text x="406" y="370" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="start" fill="#5F6368">是</text>
+  <rect x="480" y="350" width="300" height="54" rx="6" ry="6" fill="#F1F3F4" stroke="#5F6368" stroke-dasharray="6 4" />
+  <text x="630.0" y="373.7114" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11.5" font-weight="bold" text-anchor="middle" fill="#3C4043">finish_reason = "stop"</text>
+  <text x="630.0" y="391.07779999999997" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#3C4043">state = finished</text>
+  <polyline points="230,204 230,250" fill="none" stroke="#5F6368" stroke-width="1.6" />
+  <polygon points="230,250 225,241 235,241" fill="#5F6368" />
+  <text x="244" y="231.0" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="start" fill="#5F6368">否</text>
+  <polyline points="230,304 230,350" fill="none" stroke="#5F6368" stroke-width="1.6" />
+  <polygon points="230,350 225,341 235,341" fill="#5F6368" />
+  <text x="244" y="331.0" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="start" fill="#5F6368">否</text>
+  <polyline points="230,404 230,450" fill="none" stroke="#5F6368" stroke-width="1.6" />
+  <polygon points="230,450 225,441 235,441" fill="#5F6368" />
+  <text x="244" y="431.0" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="start" fill="#5F6368">否</text>
+  <rect x="70" y="450" width="320" height="54" rx="6" ry="6" fill="#E6F4EA" stroke="#34A853" />
+  <text x="230.0" y="482.4432" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#0D652D">回到 decode step，继续循环</text>
+  <polyline points="70,477 30,477 30,68 70,68" fill="none" stroke="#5F6368" stroke-width="1.6" stroke-dasharray="6 4" />
+  <polygon points="70,68 61,63 61,73" fill="#5F6368" />
+  <text x="22" y="272" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#5F6368" transform="rotate(-90 22 272)">循环</text>
+  <rect x="830" y="150" width="250" height="254" rx="6" ry="6" fill="#EFEBE9" stroke="#8D6E63" />
+  <text x="955.0" y="243.3364" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11.5" font-weight="bold" text-anchor="middle" fill="#4E342E">state = finished 之后</text>
+  <text x="955.0" y="255.01660000000004" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="6" font-weight="normal" text-anchor="middle" fill="#4E342E"></text>
+  <text x="955.0" y="270.4228" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#4E342E">清 paged pool</text>
+  <text x="955.0" y="287.4328" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#4E342E">释放逻辑块</text>
+  <text x="955.0" y="304.4428" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#4E342E">future.set_result(seq)</text>
+  <text x="955.0" y="321.45279999999997" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#4E342E">→ 唤醒 endpoint_generate</text>
+  <polyline points="780,177 830,177" fill="none" stroke="#8D6E63" stroke-width="1.6" />
+  <polygon points="830,177 821,172 821,182" fill="#8D6E63" />
+  <polyline points="780,277 830,277" fill="none" stroke="#8D6E63" stroke-width="1.6" />
+  <polygon points="830,277 821,272 821,282" fill="#8D6E63" />
+  <polyline points="780,377 830,377" fill="none" stroke="#8D6E63" stroke-width="1.6" />
+  <polygon points="830,377 821,372 821,382" fill="#8D6E63" />
+  <polyline points="480,568 230,568 230,504" fill="none" stroke="#EA4335" stroke-width="1.6" stroke-dasharray="6 4" />
+  <polygon points="230,504 225,513 235,513" fill="#EA4335" />
+  <rect x="480" y="520" width="600" height="96" rx="6" ry="6" fill="#FCE8E6" stroke="#EA4335" />
+  <text x="780.0" y="555.7203999999999" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11.5" font-weight="bold" text-anchor="middle" fill="#A50E0E">旁路（不经过上面的判定）</text>
+  <text x="780.0" y="573.46588" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.8" font-weight="normal" text-anchor="middle" fill="#A50E0E">OutOfBlocksError → _try_swap_out_victim() 换出后重试</text>
+  <text x="780.0" y="590.96188" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.8" font-weight="normal" text-anchor="middle" fill="#A50E0E">其他异常 → finish_reason = "error"；块不足且无法换出 → "oom"</text>
+</svg>

@@ -1,0 +1,155 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="1180" height="830" viewBox="0 0 1180 830" content="&lt;mxfile host=&quot;vscode&quot; version=&quot;24.7.17&quot; type=&quot;device&quot;&gt;
+  &lt;diagram id=&quot;prefill-chunk-internals&quot; name=&quot;单个 chunk 内部流程&quot;&gt;
+    &lt;mxGraphModel dx=&quot;1200&quot; dy=&quot;900&quot; grid=&quot;1&quot; gridSize=&quot;10&quot; guides=&quot;1&quot; tooltips=&quot;1&quot; connect=&quot;1&quot; arrows=&quot;1&quot; fold=&quot;1&quot; page=&quot;1&quot; pageScale=&quot;1&quot; pageWidth=&quot;1180&quot; pageHeight=&quot;830&quot; math=&quot;0&quot; shadow=&quot;0&quot;&gt;
+      &lt;root&gt;
+        &lt;mxCell id=&quot;0&quot;/&gt;
+        &lt;mxCell id=&quot;1&quot; parent=&quot;0&quot;/&gt;
+        &lt;mxCell id=&quot;v1&quot; value=&quot;① 切片　chunk_start = seq.prefill_offset&amp;amp;#10;chunk_end = min(chunk_start + prefill_chunk_size, prompt_len)&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#F1F3F4;strokeColor=#9AA0A6;fontColor=#202124;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;60&quot; y=&quot;30&quot; width=&quot;1060&quot; height=&quot;58&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e2&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#5F6368;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;590.0&quot; y=&quot;88&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;590.0&quot; y=&quot;116&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v3&quot; value=&quot;② is_first_chunk ?&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#4285F4;fontColor=#202124;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;60&quot; y=&quot;116&quot; width=&quot;1060&quot; height=&quot;46&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v4&quot; value=&quot;⑵a  是 → 首个 chunk&amp;amp;#10;&amp;amp;#10;按【整段 prompt】一次性分配块：&amp;amp;#10;blocks = ceil(prompt_len / kv_block_size)&amp;amp;#10;past_kv = None（还没有历史 KV）&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#E6F4EA;strokeColor=#34A853;fontColor=#0D652D;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;60&quot; y=&quot;196&quot; width=&quot;520&quot; height=&quot;108&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v5&quot; value=&quot;⑵b  否 → 后续 chunk&amp;amp;#10;&amp;amp;#10;past_kv = build_past_key_values()&amp;amp;#10;从 paged pool 读回 [0, offset) 的 KV，&amp;amp;#10;再 permute 成 HF 的 [B, kv_heads, T, d]&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FEF7E0;strokeColor=#F9AB00;fontColor=#8A5A00;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;600&quot; y=&quot;196&quot; width=&quot;520&quot; height=&quot;108&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e6&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#34A853;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;320&quot; y=&quot;162&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;320&quot; y=&quot;196&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e7&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#F9AB00;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;860&quot; y=&quot;162&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;860&quot; y=&quot;196&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e8&quot; value=&quot;&quot; style=&quot;endArrow=none;html=1;rounded=0;strokeColor=#5F6368;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;320&quot; y=&quot;304&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;590.0&quot; y=&quot;336&quot; as=&quot;targetPoint&quot;/&gt;
+            &lt;Array as=&quot;points&quot;&gt;&lt;mxPoint x=&quot;320&quot; y=&quot;320&quot;/&gt;&lt;mxPoint x=&quot;590.0&quot; y=&quot;320&quot;/&gt;&lt;/Array&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e9&quot; value=&quot;&quot; style=&quot;endArrow=none;html=1;rounded=0;strokeColor=#5F6368;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;860&quot; y=&quot;304&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;860&quot; y=&quot;320&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e10&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#5F6368;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;590.0&quot; y=&quot;320&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;590.0&quot; y=&quot;336&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v11&quot; value=&quot;③ forward(input_ids=chunk_ids, past_key_values=past_kv)&amp;amp;#10;新 token 的 position 由 past_kv 的长度隐式决定 —— 这就是&amp;quot;顺序&amp;quot;的来源&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F0FE;strokeColor=#4285F4;fontColor=#174EA6;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;60&quot; y=&quot;336&quot; width=&quot;1060&quot; height=&quot;62&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e12&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#5F6368;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;590.0&quot; y=&quot;398&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;590.0&quot; y=&quot;428&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v13&quot; value=&quot;④ new_past_kv 覆盖 [0, chunk_end) —— 注意它【包含】prior cache&amp;amp;#10;所以取本 chunk 新算的那段要用负索引：source_position = i − chunk_len&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#EFEBE9;strokeColor=#8D6E63;fontColor=#4E342E;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;60&quot; y=&quot;428&quot; width=&quot;1060&quot; height=&quot;62&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e14&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#5F6368;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;590.0&quot; y=&quot;490&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;590.0&quot; y=&quot;520&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v15&quot; value=&quot;⑤ 写回 pool　global_pos = chunk_start + i&amp;amp;#10;→ block_idx = global_pos // kv_block_size　　slot = global_pos % kv_block_size&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F0FE;strokeColor=#4285F4;fontColor=#174EA6;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;60&quot; y=&quot;520&quot; width=&quot;1060&quot; height=&quot;62&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e16&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#5F6368;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;590.0&quot; y=&quot;582&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;590.0&quot; y=&quot;612&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v17&quot; value=&quot;⑥ seq.prefill_offset = chunk_end　（游标单调前进：不重叠、不遗漏）&amp;amp;#10;⑦ is_last_chunk ? → 是：采样 logits[:, -1, :] → 首个 token，state = decoding&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#E6F4EA;strokeColor=#34A853;fontColor=#0D652D;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;60&quot; y=&quot;612&quot; width=&quot;1060&quot; height=&quot;62&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v18&quot; value=&quot;为什么同时有 block 和 chunk 两个单位？&amp;amp;#10;&amp;amp;#10;block（kv_block_size=16）= 存储单位 → 写 pool 时用&amp;amp;#10;chunk（prefill_chunk_size=128）= 计算单位 → forward 时用&amp;amp;#10;两者互不相干：8 个 chunk 均匀落到若干 block 上&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#F8F9FA;strokeColor=#C7CDD4;fontColor=#202124;fontSize=12;dashed=1;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;60&quot; y=&quot;706&quot; width=&quot;520&quot; height=&quot;104&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v19&quot; value=&quot;prefill 结束时 live cache 是【空的】&amp;amp;#10;&amp;amp;#10;chunked prefill 从不把 new_past_kv 挂到 seq 上，&amp;amp;#10;pool 是唯一真源；所以 decode 的第一步会&amp;amp;#10;再从 pool 重建一次（见 0014 §5）&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#F8F9FA;strokeColor=#C7CDD4;fontColor=#202124;fontSize=12;dashed=1;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;600&quot; y=&quot;706&quot; width=&quot;520&quot; height=&quot;104&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+      &lt;/root&gt;
+    &lt;/mxGraphModel&gt;
+  &lt;/diagram&gt;
+&lt;/mxfile&gt;" style="background-color: transparent;">
+  <rect x="60" y="30" width="1060" height="58" rx="6" ry="6" fill="#F1F3F4" stroke="#9AA0A6" />
+  <text x="590.0" y="55.711400000000005" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11.5" font-weight="bold" text-anchor="middle" fill="#202124">① 切片　chunk_start = seq.prefill_offset</text>
+  <text x="590.0" y="73.07780000000001" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#202124">chunk_end = min(chunk_start + prefill_chunk_size, prompt_len)</text>
+  <polyline points="590.0,88 590.0,116" fill="none" stroke="#5F6368" stroke-width="1.6" />
+  <polygon points="590.0,116 585.0,107 595.0,107" fill="#5F6368" />
+  <rect x="60" y="116" width="1060" height="46" rx="6" ry="6" fill="#FFFFFF" stroke="#4285F4" />
+  <text x="590.0" y="144.4432" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#202124">② is_first_chunk ?</text>
+  <rect x="60" y="196" width="520" height="108" rx="6" ry="6" fill="#E6F4EA" stroke="#34A853" />
+  <text x="320.0" y="224.8414" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11.5" font-weight="bold" text-anchor="middle" fill="#0D652D">⑵a  是 → 首个 chunk</text>
+  <text x="320.0" y="235.25799999999998" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="5" font-weight="normal" text-anchor="middle" fill="#0D652D"></text>
+  <text x="320.0" y="250.93959999999998" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="normal" text-anchor="middle" fill="#0D652D">按【整段 prompt】一次性分配块：</text>
+  <text x="320.0" y="268.1278" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#0D652D">blocks = ceil(prompt_len / kv_block_size)</text>
+  <text x="320.0" y="285.7696" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="normal" text-anchor="middle" fill="#0D652D">past_kv = None（还没有历史 KV）</text>
+  <rect x="600" y="196" width="520" height="108" rx="6" ry="6" fill="#FEF7E0" stroke="#F9AB00" />
+  <text x="860.0" y="225.2464" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11.5" font-weight="bold" text-anchor="middle" fill="#8A5A00">⑵b  否 → 后续 chunk</text>
+  <text x="860.0" y="235.66299999999998" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="5" font-weight="normal" text-anchor="middle" fill="#8A5A00"></text>
+  <text x="860.0" y="251.34459999999999" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="normal" text-anchor="middle" fill="#8A5A00">past_kv = build_past_key_values()</text>
+  <text x="860.0" y="268.53279999999995" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#8A5A00">从 paged pool 读回 [0, offset) 的 KV，</text>
+  <text x="860.0" y="285.54279999999994" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#8A5A00">再 permute 成 HF 的 [B, kv_heads, T, d]</text>
+  <polyline points="320,162 320,196" fill="none" stroke="#34A853" stroke-width="1.6" />
+  <polygon points="320,196 315,187 325,187" fill="#34A853" />
+  <polyline points="860,162 860,196" fill="none" stroke="#F9AB00" stroke-width="1.6" />
+  <polygon points="860,196 855,187 865,187" fill="#F9AB00" />
+  <text x="332" y="184" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="start" fill="#34A853">是</text>
+  <text x="872" y="184" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="start" fill="#F9AB00">否</text>
+  <polyline points="320,304 320,320 590.0,320 590.0,336" fill="none" stroke="#5F6368" stroke-width="1.6" />
+  <polyline points="860,304 860,320" fill="none" stroke="#5F6368" stroke-width="1.6" />
+  <polyline points="590.0,320 590.0,336" fill="none" stroke="#5F6368" stroke-width="1.6" />
+  <polygon points="590.0,336 585.0,327 595.0,327" fill="#5F6368" />
+  <rect x="60" y="336" width="1060" height="62" rx="6" ry="6" fill="#E8F0FE" stroke="#4285F4" />
+  <text x="590.0" y="363.7114" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11.5" font-weight="bold" text-anchor="middle" fill="#174EA6">③ forward(input_ids=chunk_ids, past_key_values=past_kv)</text>
+  <text x="590.0" y="381.07779999999997" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#174EA6">新 token 的 position 由 past_kv 的长度隐式决定 —— 这就是"顺序"的来源</text>
+  <polyline points="590.0,398 590.0,428" fill="none" stroke="#5F6368" stroke-width="1.6" />
+  <polygon points="590.0,428 585.0,419 595.0,419" fill="#5F6368" />
+  <rect x="60" y="428" width="1060" height="62" rx="6" ry="6" fill="#EFEBE9" stroke="#8D6E63" />
+  <text x="590.0" y="455.7114" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11.5" font-weight="bold" text-anchor="middle" fill="#4E342E">④ new_past_kv 覆盖 [0, chunk_end) —— 注意它【包含】prior cache</text>
+  <text x="590.0" y="473.07779999999997" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#4E342E">所以取本 chunk 新算的那段要用负索引：source_position = i − chunk_len</text>
+  <polyline points="590.0,490 590.0,520" fill="none" stroke="#5F6368" stroke-width="1.6" />
+  <polygon points="590.0,520 585.0,511 595.0,511" fill="#5F6368" />
+  <rect x="60" y="520" width="1060" height="62" rx="6" ry="6" fill="#E8F0FE" stroke="#4285F4" />
+  <text x="590.0" y="547.7113999999999" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11.5" font-weight="bold" text-anchor="middle" fill="#174EA6">⑤ 写回 pool　global_pos = chunk_start + i</text>
+  <text x="590.0" y="565.0777999999999" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#174EA6">→ block_idx = global_pos // kv_block_size　　slot = global_pos % kv_block_size</text>
+  <polyline points="590.0,582 590.0,612" fill="none" stroke="#5F6368" stroke-width="1.6" />
+  <polygon points="590.0,612 585.0,603 595.0,603" fill="#5F6368" />
+  <rect x="60" y="612" width="1060" height="62" rx="6" ry="6" fill="#E6F4EA" stroke="#34A853" />
+  <text x="590.0" y="639.7113999999999" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11.5" font-weight="bold" text-anchor="middle" fill="#0D652D">⑥ seq.prefill_offset = chunk_end　（游标单调前进：不重叠、不遗漏）</text>
+  <text x="590.0" y="657.0777999999999" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#0D652D">⑦ is_last_chunk ? → 是：采样 logits[:, -1, :] → 首个 token，state = decoding</text>
+  <rect x="60" y="706" width="520" height="104" rx="6" ry="6" fill="#F8F9FA" stroke="#C7CDD4" stroke-dasharray="6 4" />
+  <text x="320.0" y="733.6514" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11.5" font-weight="bold" text-anchor="middle" fill="#202124">为什么同时有 block 和 chunk 两个单位？</text>
+  <text x="320.0" y="744.068" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="5" font-weight="normal" text-anchor="middle" fill="#202124"></text>
+  <text x="320.0" y="759.1178" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#202124">block（kv_block_size=16）= 存储单位 → 写 pool 时用</text>
+  <text x="320.0" y="776.1278" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#202124">chunk（prefill_chunk_size=128）= 计算单位 → forward 时用</text>
+  <text x="320.0" y="793.1378" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#202124">两者互不相干：8 个 chunk 均匀落到若干 block 上</text>
+  <rect x="600" y="706" width="520" height="104" rx="6" ry="6" fill="#F8F9FA" stroke="#C7CDD4" stroke-dasharray="6 4" />
+  <text x="860.0" y="733.6514" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11.5" font-weight="bold" text-anchor="middle" fill="#202124">prefill 结束时 live cache 是【空的】</text>
+  <text x="860.0" y="744.068" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="5" font-weight="normal" text-anchor="middle" fill="#202124"></text>
+  <text x="860.0" y="759.1178" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#202124">chunked prefill 从不把 new_past_kv 挂到 seq 上，</text>
+  <text x="860.0" y="776.1278" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#202124">pool 是唯一真源；所以 decode 的第一步会</text>
+  <text x="860.0" y="793.1378" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#202124">再从 pool 重建一次（见 0014 §5）</text>
+</svg>
