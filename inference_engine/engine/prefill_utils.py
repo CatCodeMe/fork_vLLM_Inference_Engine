@@ -18,6 +18,10 @@ separate executor calls would require awaiting twice; this helper collapses
 the forward-pass portion cleanly.
 """
 
+# [LEARN] 一句话：这是给调度器用的"只做 forward、不做分词"的 prefill 入口。
+# [GOTCHA] 当前生产路径走的是分块 prefill（scheduler._prefill_chunk_blocking），
+#         本函数主要被遗留的 _prefill_sequence() 使用。
+
 from __future__ import annotations
 
 import time
@@ -63,6 +67,7 @@ def run_prefill_single(
             return_dict=True,
         )
 
+    # [LEARN] TTFT 只统计 forward 本身，不含排队/分词；排队时延在 scheduler 里另行记录。
     ttft_ms = (time.perf_counter() - t0) * 1000.0
 
     logits = outputs.logits               # (1, seq_len, vocab_size)

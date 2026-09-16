@@ -9,6 +9,13 @@ live Sequence.past_key_values tensor.
 No async.  No custom CUDA kernel.  All torch operations are device-agnostic.
 """
 
+# [LEARN] Phase 8 的"反向通道"：把 paged pool 里的散块重新拼成 HuggingFace 认识的
+#         past_key_values 对象。什么时候用？
+#           - swap-in 换回设备后，需要重建缓存继续 decode；
+#           - 分块 prefill 的后续 chunk，需要带上已积累的 KV 再前向。
+# [GOTCHA] 正常 decode 的每一步并不走这里（热路径用 seq 上的 live cache），
+#         所以 paged attention 实际上只用在"换入/续 chunk"这些冷路径。
+
 from __future__ import annotations
 
 import logging
@@ -136,6 +143,8 @@ def reconstruct_dynamic_cache(
     cache = DynamicCache()
     for layer_idx in range(num_layers):
         keys, values = paged_kv_cache.read_kv_sequence(seq_id, layer_idx)
+        # [LEARN] paged pool 是 [tokens, kv_heads, head_dim]；HF 要求
+        #         [batch, kv_heads, tokens, head_dim]，所以 unsqueeze + permute。
         key_tensor = keys.unsqueeze(0).permute(0, 2, 1, 3).to(device)
         value_tensor = values.unsqueeze(0).permute(0, 2, 1, 3).to(device)
         cache.update(key_tensor, value_tensor, layer_idx)
@@ -216,6 +225,8 @@ def extract_new_token_kv(
     layer_key, layer_val = _extract_kv_layer(past_key_values, layer_idx)
     # layer_key shape: [batch=1, num_kv_heads, seq_len, head_dim]
     # The newly generated token is always the last slot.
+    # [GOTCHA] 参数 token_position 实际未被使用（只用 -1 取最后一位）；
+    #         保留它是为了接口清晰，但调用方不要以为它能指定位置。
     key_slice = layer_key[0, :, -1, :]   # [num_kv_heads, head_dim]
     value_slice = layer_val[0, :, -1, :]
     return key_slice, value_slice

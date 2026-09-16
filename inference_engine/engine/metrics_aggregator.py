@@ -18,6 +18,11 @@ Design
 * full_report() is the single method the /metrics endpoint calls.
 """
 
+# [LEARN] Phase 10 不新增数据，只把 Phase 1–9 各个 tracker 的 stats() 汇总，
+#         再算吞吐 / 分位数 / SLO 合规率。理解 /metrics 返回结构看这个文件就够了。
+# [GOTCHA] compute_throughput() 的分母是固定的 history_window_seconds（默认 60s），
+#         而不是"真实经过时间"。服务器刚启动时窗口没填满，吞吐会被低估。
+
 from __future__ import annotations
 
 import threading
@@ -184,6 +189,8 @@ class MetricsAggregator:
         (tokens_per_sec, requests_per_sec)
             Both 0.0 when the windows are empty.
         """
+        # [LEARN] 滑动窗口：_prune_window 丢掉超过 window 的旧记录，剩下的求和
+        #         再除以 window 长度，得到滚动平均吞吐（tokens/s）。
         with self._lock:
             self._prune_window(self._throughput_window)
             self._prune_window(self._request_completion_window)
@@ -251,6 +258,9 @@ class MetricsAggregator:
         When no data is available, compliance is defined as 100.0% and
         sample_size is 0 (avoids division-by-zero errors).
         """
+        # [LEARN] SLO 默认值：TTFT ≤ 200ms、总时延 ≤ 5000ms。
+        #         Mac/MPS 上 TTFT 经常 > 200ms，所以合规率会很低——这是硬件差异，
+        #         不是引擎算错了。想跑好看的指标可以调大这两个阈值。
         records = self.metrics_collector.get_all()
         n = len(records)
 

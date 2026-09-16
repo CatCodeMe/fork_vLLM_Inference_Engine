@@ -1,5 +1,9 @@
 """Thread-safe runtime accounting for per-sequence KV-cache growth."""
 
+# [LEARN] Phase 5 的"内存计量器"：不碰 torch，只用 token 数 × 每 token 字节数
+#         估算 KV 内存，给 /metrics 提供 memory_pressure 等指标。
+# [GOTCHA] 这是解析估算，不代表 paged pool 的真实占用；两者不要混用。
+
 from __future__ import annotations
 
 from threading import Lock
@@ -47,12 +51,17 @@ class KVCacheTracker:
             return total
 
     def memory_pressure(self) -> float:
+        # [LEARN] 压力 = 当前估算占用 / 配置上限，钳制在 [0,1]。
+        #         上限是 config.kv_cache_max_memory_mb（默认 1024MB），
+        #         仅用于指标展示，并不会触发实际抢占（抢占看的是块池是否耗尽）。
         if self.max_memory_mb <= 0:
             return 0.0
         pressure = self.total_memory_mb() / self.max_memory_mb
         return min(1.0, max(0.0, pressure))
 
     def eviction_candidates(self, n: int = 3) -> list[str]:
+        # [LEARN] 只是"建议清单"（按 token 数从大到小），供人工/未来策略参考；
+        #         真正的抢占选择在 scheduler._try_swap_out_victim()（按块数最大）。
         with self._lock:
             ordered = sorted(
                 self._sequence_token_counts.items(),

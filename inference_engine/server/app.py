@@ -21,6 +21,11 @@ GET  /metrics       Returns last N results + summary statistics.
 GET  /health        Returns model name, device, and status.
 """
 
+# [LEARN] Phase 1 服务器：用两道锁强制"一次只服务一个请求"，作为性能对比基线。
+#   1) asyncio.Lock  —— 应用层串行（后续请求在锁上排队，不会 503）
+#   2) 单 worker 线程池 —— 物理层串行（即使锁被绕过也只能跑一个）
+# [WHY] 推理放到线程池 run_in_executor，事件循环不被独占，/health 仍可响应。
+
 from __future__ import annotations
 
 import asyncio
@@ -45,6 +50,23 @@ logger = logging.getLogger(__name__)
 
 # ── Module-level singletons (populated during lifespan startup) ───────────────
 
+# [LEARN] Python/FastAPI 惯用法速读（下面几处都会用到）：
+#   @asynccontextmanager   
+#       Python 标准库 contextlib 的装饰器。把一个 async 生成器函数
+#       （内部用 yield）“包装”成可以用 `async with` 的东西。
+#   yield                   
+#       生成器里的“分界点”：yield 之前的代码 = 进入时执行（启动），
+#       yield 之后的代码 = 退出时执行（关闭）。FastAPI 用这个做 lifespan。
+#   @app.post("/generate")  
+#       装饰器（decorator）：把下面的 async 函数注册成路由，
+#       收到 POST /generate 时就调它。@app.get 同理。
+#   BaseModel + Field       
+#       Pydantic 的数据模型：自动解析 JSON、校验类型/范围，
+#       校验失败就返回 422（你之前那个 max_new_tokens ≤ 512 就是这里管）。
+#   async / await           
+#       “协程”：await 时把这个函数的控制权交回事件循环，
+#       让服务器在等 IO/线程池时仍能处理其它请求。
+
 _config: Optional[Config] = None
 _loaded_model: Optional[LoadedModel] = None
 _collector: Optional[MetricsCollector] = None
@@ -67,6 +89,11 @@ async def lifespan(app: FastAPI):
     Startup: load model + tokenizer, initialise metrics collector.
     Shutdown: flush metrics to disk.
     """
+    # [LEARN] 这是 FastAPI 推荐的“生命周期”写法（lifespan）：
+    #         uvicorn 启动服务前会先跑 yield 之前的代码，关闭时再跑 yield 之后的。
+    #         因为“加载模型”很慢，放在这里只做一次，不占用每个请求。
+    # [GOTCHA] 这里没有用 `async with` 手动调用——是 FastAPI 在下面
+    #         `FastAPI(lifespan=lifespan)` 时替你管理进入/退出。
     global _config, _loaded_model, _collector
 
     _config = Config()
@@ -85,6 +112,8 @@ async def lifespan(app: FastAPI):
     yield  # ── server is running ────────────────────────────────────────────
 
     # Shutdown: persist metrics
+    # [GOTCHA] 关闭时会把结果写到 metrics_output_path（默认 baseline_metrics.json），
+    #         会覆盖仓库里已提交的基准文件；调试时用 METRICS_OUTPUT_PATH 改路径。
     logger.info("Shutting down — writing metrics to %s", _config.metrics_output_path)
     _collector.dump_to_json(_config.metrics_output_path)
     _executor.shutdown(wait=False)
@@ -92,6 +121,8 @@ async def lifespan(app: FastAPI):
 
 # ── App ───────────────────────────────────────────────────────────────────────
 
+# [LEARN] 创建 FastAPI 应用对象。lifespan=lifespan 就是把上面的生命周期函数接上；
+#         title/description/version 会显示在自动生成的 /docs 页面上。
 app = FastAPI(
     title="Sequential LLM Inference Server",
     description=(
@@ -106,6 +137,9 @@ app = FastAPI(
 # ── Request / Response schemas ────────────────────────────────────────────────
 
 
+# [LEARN] Pydantic 请求模型：客户端 POST 的 JSON 会先被解析成这个对象。
+#         Field(ge=1, le=512) 就是之前 422 报错的来源（不在仓库里搜“错误文案”，
+#         要搜“约束” le=512）。校验通过后，函数里就能直接点号访问 request.prompt。
 class GenerateRequest(BaseModel):
     prompt: str = Field(..., min_length=1, description="Input prompt text")
     max_new_tokens: int = Field(
@@ -143,6 +177,9 @@ def _run_generate(prompt: str, max_new_tokens: int) -> GenerationResult:
 # ── Endpoints ─────────────────────────────────────────────────────────────────
 
 
+# [LEARN] 路由装饰器：把这个 async 函数绑定到 POST /generate。
+#         FastAPI 会自动：解析/校验请求体 → 调函数 → 把返回值序列化成 JSON。
+#         下面所有 @app.get(...) 端点是同一机制。
 @app.post("/generate", response_class=JSONResponse)
 async def endpoint_generate(request: GenerateRequest):
     """
@@ -154,6 +191,8 @@ async def endpoint_generate(request: GenerateRequest):
     if _loaded_model is None or _collector is None:
         raise HTTPException(status_code=503, detail="Model not ready")
 
+    # [TRACE] 请求在这里拿锁 → 提交线程池跑 generate() → 释放锁；
+    #         同一时刻只有一个请求能进入临界区，这就是"顺序服务"的根源。
     async with inference_lock:
         loop = asyncio.get_event_loop()
         try:
