@@ -1,0 +1,33 @@
+{
+  // ── Python interpreter ─────────────────────────────────────────────────────
+  // uv creates the project virtualenv at .venv automatically.
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+  "python.terminal.activateEnvironment": true,
+  "python.terminal.activateEnvInCurrentTerminal": true,
+
+  // Make `import inference_engine.*` resolve from the repo root while editing.
+  "python.analysis.extraPaths": ["${workspaceFolder}"],
+  "python.autoComplete.extraPaths": ["${workspaceFolder}"],
+
+  // ── Testing ────────────────────────────────────────────────────────────────
+  "python.testing.pytestEnabled": true,
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestArgs": ["inference_engine/tests"],
+  "python.testing.cwd": "${workspaceFolder}",
+
+  // ── Editor ─────────────────────────────────────────────────────────────────
+  "editor.rulers": [100],
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "[python]": {
+    "editor.tabSize": 4,
+    "editor.formatOnSave": false
+  },
+
+  // Hide noisy build/cache folders from the explorer.
+  "files.exclude": {
+    "**/__pycache__": true,
+    "**/.pytest_cache": true,
+    "**/*.egg-info": true
+  }
+}
