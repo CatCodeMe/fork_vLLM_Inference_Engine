@@ -1,5 +1,12 @@
 # vLLM_Inference_Engine · 中文学习 fork
 
+<p align="center">
+  <!-- README-I18N:START 不要手改这一行；用 scripts/check_readme_i18n.py 校验 -->
+  <a href="README.md"><img alt="English" src="https://img.shields.io/badge/README-English-d0d7de?style=flat-square"></a>
+  <img alt="简体中文" src="https://img.shields.io/badge/README-%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-2F80ED?style=flat-square">
+  <!-- README-I18N:END -->
+</p>
+
 > 上游是 [TryingtobeingNikhil/vLLM_Inference_Engine](https://github.com/TryingtobeingNikhil/vLLM_Inference_Engine)
 > （又名 **PageServe**）—— 一个把 LLM 推理引擎拆成 **11 个 Phase** 逐步搭起来的教学项目：
 > 顺序服务基线 → 连续批处理 → 请求队列 → 分块 prefill → KV 分页 → CPU 换出 → 指标 → 压测。
