@@ -1,0 +1,184 @@
+{
+  // PageServe debug configurations.
+  //
+  // How to use:
+  //   1. Run "Serve: Phase 2 ..." once (F5). It stays running.
+  //   2. Launch any "Validate"/"Load test"/"Bench" config. Configs that talk to
+  //      the server first run the "wait: phase N health" preLaunchTask, which
+  //      polls /health until the model has finished loading.
+  //
+  // Ctrl+Shift+D opens the Run & Debug panel.
+  "version": "0.2.0",
+  "configurations": [
+    // ── Servers ──────────────────────────────────────────────────────────────
+    {
+      "name": "🌐 Serve: Phase 1 sequential  (:8000)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/scripts/serve.py",
+      "args": ["--phase", "1"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "justMyCode": false,
+      // On shutdown the Phase 1 server dumps its collected results to
+      // config.metrics_output_path (default: baseline_metrics.json) and would
+      // clobber the checked-in benchmark baseline.  Write to a scratch file.
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}",
+        "PYTHONUNBUFFERED": "1",
+        "METRICS_OUTPUT_PATH": "dev_metrics.json"
+      }
+    },
+    {
+      "name": "🌐 Serve: Phase 2 continuous batching  (:8001)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/scripts/serve.py",
+      "args": ["--phase", "2"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "justMyCode": false,
+      "env": { "PYTHONPATH": "${workspaceFolder}", "PYTHONUNBUFFERED": "1" }
+    },
+
+    // ── Generic ──────────────────────────────────────────────────────────────
+    {
+      "name": "🐍 Debug current file",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${file}",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "justMyCode": false,
+      "env": { "PYTHONPATH": "${workspaceFolder}", "PYTHONUNBUFFERED": "1" }
+    },
+
+    // ── Tests ────────────────────────────────────────────────────────────────
+    {
+      "name": "🧪 Pytest: current file",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "args": ["${file}", "-v", "-s"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "justMyCode": false,
+      "env": { "PYTHONPATH": "${workspaceFolder}" }
+    },
+    {
+      "name": "🧪 Pytest: all tests",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "args": ["inference_engine/tests", "-v"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "justMyCode": false,
+      "env": { "PYTHONPATH": "${workspaceFolder}" }
+    },
+
+    // ── Validation (needs the matching server running) ────────────────────────
+    {
+      "name": "📊 Validate Phase 1  (run_validation.py)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/run_validation.py",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "justMyCode": false,
+      "preLaunchTask": "wait: phase 1 health",
+      "env": { "PYTHONPATH": "${workspaceFolder}", "PYTHONUNBUFFERED": "1" }
+    },
+    {
+      "name": "📊 Validate Phase 2 vs baseline  (run_validation_v2.py)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/run_validation_v2.py",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "justMyCode": false,
+      "preLaunchTask": "wait: phase 2 health",
+      "env": { "PYTHONPATH": "${workspaceFolder}", "PYTHONUNBUFFERED": "1" }
+    },
+
+    // ── Load testing (needs Phase 2 server) ───────────────────────────────────
+    {
+      "name": "🚦 Load test: constant  (Phase 2)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/run_load_test.py",
+      "args": [
+        "--server", "phase2", "--profile", "constant",
+        "--num-requests", "20", "--rps", "3.0"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "justMyCode": false,
+      "preLaunchTask": "wait: phase 2 health",
+      "env": { "PYTHONPATH": "${workspaceFolder}", "PYTHONUNBUFFERED": "1" }
+    },
+    {
+      "name": "🚦 Load test: ramp  (Phase 2)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/run_load_test.py",
+      "args": [
+        "--server", "phase2", "--profile", "ramp",
+        "--num-requests", "40", "--start-rps", "1.0", "--end-rps", "10.0",
+        "--duration", "30.0"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "justMyCode": false,
+      "preLaunchTask": "wait: phase 2 health",
+      "env": { "PYTHONPATH": "${workspaceFolder}", "PYTHONUNBUFFERED": "1" }
+    },
+    {
+      "name": "🚦 Load test: burst  (Phase 2)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/run_load_test.py",
+      "args": [
+        "--server", "phase2", "--profile", "burst",
+        "--num-bursts", "4", "--requests-per-burst", "5", "--burst-interval", "3.0"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "justMyCode": false,
+      "preLaunchTask": "wait: phase 2 health",
+      "env": { "PYTHONPATH": "${workspaceFolder}", "PYTHONUNBUFFERED": "1" }
+    },
+
+    // ── Standalone benchmarks (load the model directly, no server needed) ─────
+    {
+      "name": "⚡ Bench: direct decode  (bench_direct.py)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/bench_direct.py",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "justMyCode": false,
+      "env": { "PYTHONPATH": "${workspaceFolder}", "PYTHONUNBUFFERED": "1" }
+    },
+    {
+      "name": "⚡ Bench: batched decode  (bench_batched_decode.py)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/bench_batched_decode.py",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "justMyCode": false,
+      "env": { "PYTHONPATH": "${workspaceFolder}", "PYTHONUNBUFFERED": "1" }
+    },
+    {
+      "name": "⚡ Bench: per-phase  (bench_phases.py)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/bench_phases.py",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "justMyCode": false,
+      "env": { "PYTHONPATH": "${workspaceFolder}", "PYTHONUNBUFFERED": "1" }
+    }
+  ]
+}

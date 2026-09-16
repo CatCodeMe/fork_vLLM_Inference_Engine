@@ -1,0 +1,78 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    // ── Health waits ─────────────────────────────────────────────────────────
+    // Used as preLaunchTask by the validation / load-test launch configs.
+    // They poll the server until the model has finished loading, so you can
+    // start the server with F5 and immediately launch a dependent config.
+    {
+      "label": "wait: phase 1 health",
+      "type": "shell",
+      "command": "for i in $(seq 1 300); do if curl -sf http://127.0.0.1:8000/health >/dev/null 2>&1; then echo '✓ Phase 1 server ready'; exit 0; fi; sleep 1; done; echo '✗ Timed out waiting for Phase 1 server on :8000'; exit 1",
+      "problemMatcher": [],
+      "presentation": { "reveal": "silent", "panel": "shared", "close": true }
+    },
+    {
+      "label": "wait: phase 2 health",
+      "type": "shell",
+      "command": "for i in $(seq 1 300); do if curl -sf http://127.0.0.1:8001/health >/dev/null 2>&1; then echo '✓ Phase 2 server ready'; exit 0; fi; sleep 1; done; echo '✗ Timed out waiting for Phase 2 server on :8001'; exit 1",
+      "problemMatcher": [],
+      "presentation": { "reveal": "silent", "panel": "shared", "close": true }
+    },
+
+    // ── Environment & tests ──────────────────────────────────────────────────
+    {
+      "label": "uv: sync dependencies",
+      "type": "shell",
+      "command": "uv sync",
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated" }
+    },
+    {
+      "label": "pytest: all tests",
+      "type": "shell",
+      "command": "uv run pytest inference_engine/tests -v",
+      "group": { "kind": "test", "isDefault": true },
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated" }
+    },
+
+    // ── Servers as background tasks (alternative to the F5 launch configs) ────
+    // `isBackground` + the custom problem matcher tells VSCode the task is
+    // "done" once uvicorn prints its running banner, which is after the model
+    // has loaded.  Useful when you want a task (not a debug session) to host
+    // the server.
+    {
+      "label": "server: phase 1 (background)",
+      "type": "shell",
+      "command": "uv run python scripts/serve.py --phase 1",
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "pageserve-phase1",
+        "pattern": [{ "regexp": "^(.*)$", "message": 1 }],
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": ".*\\[serve\\].*",
+          "endsPattern": ".*Uvicorn running on.*"
+        }
+      },
+      "presentation": { "reveal": "always", "panel": "dedicated" }
+    },
+    {
+      "label": "server: phase 2 (background)",
+      "type": "shell",
+      "command": "uv run python scripts/serve.py --phase 2",
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "pageserve-phase2",
+        "pattern": [{ "regexp": "^(.*)$", "message": 1 }],
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": ".*\\[serve\\].*",
+          "endsPattern": ".*Uvicorn running on.*"
+        }
+      },
+      "presentation": { "reveal": "always", "panel": "dedicated" }
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+[project]
+name = "pageserve"
+version = "0.1.0"
+description = "PageServe — an educational LLM inference engine with continuous batching, paged KV-cache and CPU swapping."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "torch>=2.1.0",
+    "transformers>=4.40.0",
+    "fastapi>=0.110.0",
+    "uvicorn[standard]>=0.29.0",
+    "psutil>=5.9.0",
+    "numpy>=1.26.0",
+    # [socks] pulls in socksio — required when a SOCKS proxy is configured
+    # (ALL_PROXY=...); HuggingFace Hub talks to the network through httpx.
+    "httpx[socks]>=0.27.0",
+    "accelerate>=0.27.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.23.0",
+    # 生成 docs/figures/ 下的辅助图表（scripts/plot_rope.py 等）
+    "matplotlib>=3.8.0",
+]
+
+# This repo is an application, not an installable library: tell uv not to build
+# the project itself when syncing the environment.
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["inference_engine/tests"]
+asyncio_mode = "strict"
+addopts = "-ra"

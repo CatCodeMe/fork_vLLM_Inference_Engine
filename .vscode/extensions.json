@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "ms-python.python",
+    "ms-python.debugpy",
+    "ms-python.vscode-pylance",
+    "charliermarsh.ruff",
+    // 渲染 Markdown 里的 LaTeX 数学公式（docs/blog-*.md 需要）
+    "shd101wyy.markdown-preview-enhanced"
+  ]
+}
