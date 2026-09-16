@@ -18,7 +18,12 @@
 
 </div>
 
-> 🌏 **中文说明在这里：[`README.zh-CN.md`](README.zh-CN.md)** —— 本 fork 在这一版之上加了中文学习注释、一套中文文档和调试工具链。
+<p align="center">
+  <!-- README-I18N:START 不要手改这一行；用 scripts/check_readme_i18n.py 校验 -->
+  <img alt="English" src="https://img.shields.io/badge/README-English-2F80ED?style=flat-square">
+  <a href="README.zh-CN.md"><img alt="简体中文" src="https://img.shields.io/badge/README-%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-d0d7de?style=flat-square"></a>
+  <!-- README-I18N:END -->
+</p>
 
 ---
 
