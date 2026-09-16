@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="1120" height="740" viewBox="0 0 1120 740" content="&lt;mxfile host=&quot;vscode&quot; version=&quot;24.7.17&quot; type=&quot;device&quot;&gt;
+  &lt;diagram id=&quot;kv-locations&quot; name=&quot;KV 在四个阶段的位置&quot;&gt;
+    &lt;mxGraphModel dx=&quot;1200&quot; dy=&quot;900&quot; grid=&quot;1&quot; gridSize=&quot;10&quot; guides=&quot;1&quot; tooltips=&quot;1&quot; connect=&quot;1&quot; arrows=&quot;1&quot; fold=&quot;1&quot; page=&quot;1&quot; pageScale=&quot;1&quot; pageWidth=&quot;1120&quot; pageHeight=&quot;740&quot; math=&quot;0&quot; shadow=&quot;0&quot;&gt;
+      &lt;root&gt;
+        &lt;mxCell id=&quot;0&quot;/&gt;
+        &lt;mxCell id=&quot;1&quot; parent=&quot;0&quot;/&gt;
+        &lt;mxCell id=&quot;v1&quot; value=&quot;① 设备 paged pool&amp;amp;#10;（存储真源）&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#F1F3F4;strokeColor=#9AA0A6;fontColor=#3C4043;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;170&quot; y=&quot;40&quot; width=&quot;280&quot; height=&quot;52&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v2&quot; value=&quot;② seq.past_key_values&amp;amp;#10;（decode 热路径）&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#F1F3F4;strokeColor=#9AA0A6;fontColor=#3C4043;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;490&quot; y=&quot;40&quot; width=&quot;280&quot; height=&quot;52&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v3&quot; value=&quot;③ CPU 暂存池&amp;amp;#10;（被抢占时）&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#F1F3F4;strokeColor=#9AA0A6;fontColor=#3C4043;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;810&quot; y=&quot;40&quot; width=&quot;280&quot; height=&quot;52&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v4&quot; value=&quot;✅ 每个 chunk 写入&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#34A853;fontColor=#34A853;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;170&quot; y=&quot;120&quot; width=&quot;280&quot; height=&quot;64&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v5&quot; value=&quot;✗ 从不保留&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#EA4335;fontColor=#EA4335;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;490&quot; y=&quot;120&quot; width=&quot;280&quot; height=&quot;64&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v6&quot; value=&quot;✗&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#EA4335;fontColor=#EA4335;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;810&quot; y=&quot;120&quot; width=&quot;280&quot; height=&quot;64&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v7&quot; value=&quot;✅ 读回全部历史&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#34A853;fontColor=#34A853;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;170&quot; y=&quot;250&quot; width=&quot;280&quot; height=&quot;64&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v8&quot; value=&quot;✅ 重建出来&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#34A853;fontColor=#34A853;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;490&quot; y=&quot;250&quot; width=&quot;280&quot; height=&quot;64&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v9&quot; value=&quot;✗&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#EA4335;fontColor=#EA4335;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;810&quot; y=&quot;250&quot; width=&quot;280&quot; height=&quot;64&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v10&quot; value=&quot;✅ 顺手写（只为正确性）&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#F9AB00;fontColor=#F9AB00;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;170&quot; y=&quot;380&quot; width=&quot;280&quot; height=&quot;64&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v11&quot; value=&quot;✅ 复用 + 更新&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#34A853;fontColor=#34A853;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;490&quot; y=&quot;380&quot; width=&quot;280&quot; height=&quot;64&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v12&quot; value=&quot;✗&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#EA4335;fontColor=#EA4335;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;810&quot; y=&quot;380&quot; width=&quot;280&quot; height=&quot;64&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v13&quot; value=&quot;⬅ 释放 / 写回&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#F9AB00;fontColor=#F9AB00;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;170&quot; y=&quot;510&quot; width=&quot;280&quot; height=&quot;64&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v14&quot; value=&quot;被清成 None&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#EA4335;fontColor=#EA4335;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;490&quot; y=&quot;510&quot; width=&quot;280&quot; height=&quot;64&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v15&quot; value=&quot;✅ 拷贝到这里&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#34A853;fontColor=#34A853;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;810&quot; y=&quot;510&quot; width=&quot;280&quot; height=&quot;64&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v16&quot; value=&quot;⚠️ decode 阶段，同一条序列的 KV 在设备上存在【两份】：pool 里一份 + live cache 一份。&amp;amp;#10;而 kv_num_blocks 只约束 pool 那一份（256 块 ≈ 48 MB）→ live cache 是&amp;quot;预算外&amp;quot;的，&amp;amp;#10;引擎的准入控制 / 抢占只看得见 pool。真 vLLM 没有第二份，因为 kernel 直接按块算注意力。&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FCE8E6;strokeColor=#EA4335;fontColor=#A50E0E;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;60&quot; y=&quot;630&quot; width=&quot;1030&quot; height=&quot;90&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+      &lt;/root&gt;
+    &lt;/mxGraphModel&gt;
+  &lt;/diagram&gt;
+&lt;/mxfile&gt;" style="background-color: transparent;">
+  <text x="20" y="60" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="12" font-weight="bold" text-anchor="start" fill="#202124">阶段</text>
+  <rect x="170" y="40" width="280" height="52" rx="6" ry="6" fill="#F1F3F4" stroke="#9AA0A6" />
+  <text x="310.0" y="63.52140000000001" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11.5" font-weight="bold" text-anchor="middle" fill="#3C4043">① 设备 paged pool</text>
+  <text x="310.0" y="79.6242" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="9.5" font-weight="normal" text-anchor="middle" fill="#3C4043">（存储真源）</text>
+  <rect x="490" y="40" width="280" height="52" rx="6" ry="6" fill="#F1F3F4" stroke="#9AA0A6" />
+  <text x="630.0" y="63.52140000000001" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11.5" font-weight="bold" text-anchor="middle" fill="#3C4043">② seq.past_key_values</text>
+  <text x="630.0" y="79.6242" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="9.5" font-weight="normal" text-anchor="middle" fill="#3C4043">（decode 热路径）</text>
+  <rect x="810" y="40" width="280" height="52" rx="6" ry="6" fill="#F1F3F4" stroke="#9AA0A6" />
+  <text x="950.0" y="63.52140000000001" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11.5" font-weight="bold" text-anchor="middle" fill="#3C4043">③ CPU 暂存池</text>
+  <text x="950.0" y="79.6242" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="9.5" font-weight="normal" text-anchor="middle" fill="#3C4043">（被抢占时）</text>
+  <text x="20" y="152" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11.5" font-weight="bold" text-anchor="start" fill="#202124">prefill（分块）</text>
+  <rect x="170" y="120" width="280" height="64" rx="6" ry="6" fill="#FFFFFF" stroke="#34A853" />
+  <text x="310.0" y="156.9896" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#34A853">✅ 每个 chunk 写入</text>
+  <rect x="490" y="120" width="280" height="64" rx="6" ry="6" fill="#FFFFFF" stroke="#EA4335" />
+  <text x="630.0" y="156.9896" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#EA4335">✗ 从不保留</text>
+  <rect x="810" y="120" width="280" height="64" rx="6" ry="6" fill="#FFFFFF" stroke="#EA4335" />
+  <text x="950.0" y="156.9896" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#EA4335">✗</text>
+  <text x="170" y="208" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="start" fill="#5F6368">↳ prefill 阶段不保留 live cache，所以下一个 chunk 必须从 pool 重建</text>
+  <text x="20" y="282" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11.5" font-weight="bold" text-anchor="start" fill="#202124">decode 第一步</text>
+  <rect x="170" y="250" width="280" height="64" rx="6" ry="6" fill="#FFFFFF" stroke="#34A853" />
+  <text x="310.0" y="286.9896" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#34A853">✅ 读回全部历史</text>
+  <rect x="490" y="250" width="280" height="64" rx="6" ry="6" fill="#FFFFFF" stroke="#34A853" />
+  <text x="630.0" y="286.9896" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#34A853">✅ 重建出来</text>
+  <rect x="810" y="250" width="280" height="64" rx="6" ry="6" fill="#FFFFFF" stroke="#EA4335" />
+  <text x="950.0" y="286.9896" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#EA4335">✗</text>
+  <text x="170" y="338" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="start" fill="#5F6368">↳ pool → live cache，一次性 O(offset)（这就是 0014 §5.5 说的那次重建）</text>
+  <text x="20" y="412" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11.5" font-weight="bold" text-anchor="start" fill="#202124">后续 decode 每步</text>
+  <rect x="170" y="380" width="280" height="64" rx="6" ry="6" fill="#FFFFFF" stroke="#F9AB00" />
+  <text x="310.0" y="416.9896" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#F9AB00">✅ 顺手写（只为正确性）</text>
+  <rect x="490" y="380" width="280" height="64" rx="6" ry="6" fill="#FFFFFF" stroke="#34A853" />
+  <text x="630.0" y="416.9896" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#34A853">✅ 复用 + 更新</text>
+  <rect x="810" y="380" width="280" height="64" rx="6" ry="6" fill="#FFFFFF" stroke="#EA4335" />
+  <text x="950.0" y="416.9896" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#EA4335">✗</text>
+  <text x="170" y="468" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="start" fill="#5F6368">↳ 计算只读 live cache；写 pool 是为了 swap/eviction 时数据是准的</text>
+  <text x="20" y="542" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11.5" font-weight="bold" text-anchor="start" fill="#202124">被抢占 / 换回</text>
+  <rect x="170" y="510" width="280" height="64" rx="6" ry="6" fill="#FFFFFF" stroke="#F9AB00" />
+  <text x="310.0" y="546.9896000000001" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#F9AB00">⬅ 释放 / 写回</text>
+  <rect x="490" y="510" width="280" height="64" rx="6" ry="6" fill="#FFFFFF" stroke="#EA4335" />
+  <text x="630.0" y="546.9896000000001" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#EA4335">被清成 None</text>
+  <rect x="810" y="510" width="280" height="64" rx="6" ry="6" fill="#FFFFFF" stroke="#34A853" />
+  <text x="950.0" y="546.9896000000001" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#34A853">✅ 拷贝到这里</text>
+  <text x="170" y="598" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="start" fill="#5F6368">↳ pool ⇄ CPU pool；live cache 丢掉，换回后按 decode 第一步再重建</text>
+  <rect x="60" y="630" width="1030" height="90" rx="6" ry="6" fill="#FCE8E6" stroke="#EA4335" />
+  <text x="575.0" y="662.3964" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11.5" font-weight="bold" text-anchor="middle" fill="#A50E0E">⚠️ decode 阶段，同一条序列的 KV 在设备上存在【两份】：pool 里一份 + live cache 一份。</text>
+  <text x="575.0" y="680.3946000000001" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="normal" text-anchor="middle" fill="#A50E0E">而 kv_num_blocks 只约束 pool 那一份（256 块 ≈ 48 MB）→ live cache 是"预算外"的，</text>
+  <text x="575.0" y="698.2146000000001" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="normal" text-anchor="middle" fill="#A50E0E">引擎的准入控制 / 抢占只看得见 pool。真 vLLM 没有第二份，因为 kernel 直接按块算注意力。</text>
+</svg>

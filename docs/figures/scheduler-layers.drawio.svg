@@ -1,0 +1,282 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="1180" height="760" viewBox="0 0 1180 760" content="&lt;mxfile host=&quot;vscode&quot; version=&quot;24.7.17&quot; type=&quot;device&quot;&gt;
+  &lt;diagram id=&quot;scheduler-layers&quot; name=&quot;scheduler.py 三层&quot;&gt;
+    &lt;mxGraphModel dx=&quot;1200&quot; dy=&quot;900&quot; grid=&quot;1&quot; gridSize=&quot;10&quot; guides=&quot;1&quot; tooltips=&quot;1&quot; connect=&quot;1&quot; arrows=&quot;1&quot; fold=&quot;1&quot; page=&quot;1&quot; pageScale=&quot;1&quot; pageWidth=&quot;1180&quot; pageHeight=&quot;760&quot; math=&quot;0&quot; shadow=&quot;0&quot;&gt;
+      &lt;root&gt;
+        &lt;mxCell id=&quot;0&quot;/&gt;
+        &lt;mxCell id=&quot;1&quot; parent=&quot;0&quot;/&gt;
+        &lt;mxCell id=&quot;b1&quot; value=&quot;接线层　__init__ (:161)　在 scheduler 启动时跑一次&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#F8F9FA;strokeColor=#C7CDD4;dashed=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=6;fontSize=13;fontStyle=1;fontColor=#202124;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;40&quot; y=&quot;130&quot; width=&quot;1080&quot; height=&quot;140&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;b2&quot; value=&quot;执行层　run_loop() (:1056) → _schedule() (:899)　每个 iteration 重复&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#F8F9FA;strokeColor=#C7CDD4;dashed=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=6;fontSize=13;fontStyle=1;fontColor=#202124;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;40&quot; y=&quot;320&quot; width=&quot;1080&quot; height=&quot;200&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;b3&quot; value=&quot;收尾层　_resolve_sequence_future() (:783)　序列结束时跑一次&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#F8F9FA;strokeColor=#C7CDD4;dashed=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=6;fontSize=13;fontStyle=1;fontColor=#202124;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;40&quot; y=&quot;580&quot; width=&quot;1080&quot; height=&quot;150&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e1&quot; value=&quot;HTTP POST /generate&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#F1F3F4;strokeColor=#9AA0A6;fontColor=#3C4043;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;40&quot; y=&quot;30&quot; width=&quot;180&quot; height=&quot;46&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e2&quot; value=&quot;app_v2.endpoint_generate()&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#F1F3F4;strokeColor=#9AA0A6;fontColor=#3C4043;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;240&quot; y=&quot;30&quot; width=&quot;210&quot; height=&quot;46&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e3&quot; value=&quot;add_request()&amp;amp;#10;（P2）&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#F1F3F4;strokeColor=#9AA0A6;fontColor=#3C4043;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;470&quot; y=&quot;30&quot; width=&quot;170&quot; height=&quot;46&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e4&quot; value=&quot;RequestQueue.enqueue()&amp;amp;#10;（P3）&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#F1F3F4;strokeColor=#9AA0A6;fontColor=#3C4043;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;660&quot; y=&quot;30&quot; width=&quot;200&quot; height=&quot;46&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e5&quot; value=&quot;await future&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#F1F3F4;strokeColor=#9AA0A6;fontColor=#3C4043;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;880&quot; y=&quot;30&quot; width=&quot;140&quot; height=&quot;46&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;w1&quot; value=&quot;BlockAllocator&amp;amp;#10;逻辑块账本&amp;amp;#10;（P6）&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F0FE;strokeColor=#4285F4;fontColor=#174EA6;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;80&quot; y=&quot;185&quot; width=&quot;150&quot; height=&quot;66&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;w2&quot; value=&quot;PagedKVCache&amp;amp;#10;物理 KV 大 tensor&amp;amp;#10;（P7）&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F0FE;strokeColor=#4285F4;fontColor=#174EA6;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;252&quot; y=&quot;185&quot; width=&quot;150&quot; height=&quot;66&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;w3&quot; value=&quot;CPUSwapManager&amp;amp;#10;CPU 临时仓&amp;amp;#10;（P9）&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F0FE;strokeColor=#4285F4;fontColor=#174EA6;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;424&quot; y=&quot;185&quot; width=&quot;150&quot; height=&quot;66&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;w4&quot; value=&quot;RequestQueue&amp;amp;#10;等待队列 + 超时&amp;amp;#10;（P3）&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F0FE;strokeColor=#4285F4;fontColor=#174EA6;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;596&quot; y=&quot;185&quot; width=&quot;150&quot; height=&quot;66&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;w5&quot; value=&quot;StageTracker&amp;amp;#10;prefill/decode 计时&amp;amp;#10;（P4）&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F0FE;strokeColor=#4285F4;fontColor=#174EA6;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;768&quot; y=&quot;185&quot; width=&quot;150&quot; height=&quot;66&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;w6&quot; value=&quot;MetricsAggregator&amp;amp;#10;分位数 / SLO&amp;amp;#10;（P10）&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F0FE;strokeColor=#4285F4;fontColor=#174EA6;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;940&quot; y=&quot;185&quot; width=&quot;150&quot; height=&quot;66&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;s0&quot; value=&quot;Step 0　swap-in&amp;amp;#10;把被换出的序列换回设备&amp;amp;#10;块够才换&amp;amp;#10;（P9）&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#E6F4EA;strokeColor=#34A853;fontColor=#0D652D;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;65&quot; y=&quot;390&quot; width=&quot;190&quot; height=&quot;96&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;s1&quot; value=&quot;Step 1　admit&amp;amp;#10;队列 → running&amp;amp;#10;只登记，不 forward&amp;amp;#10;（P3 P4）&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#E6F4EA;strokeColor=#34A853;fontColor=#0D652D;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;275&quot; y=&quot;390&quot; width=&quot;190&quot; height=&quot;96&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;s2&quot; value=&quot;Step 2　chunked prefill&amp;amp;#10;一次 ≤ chunk_size token&amp;amp;#10;受 prefill_budget 限制&amp;amp;#10;（P4 P6 P7）&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#E6F4EA;strokeColor=#34A853;fontColor=#0D652D;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;485&quot; y=&quot;390&quot; width=&quot;190&quot; height=&quot;96&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;s3&quot; value=&quot;Step 3　decode&amp;amp;#10;每个 decoding 序列推 1 token&amp;amp;#10;批内一起 forward&amp;amp;#10;（P2 P8 P9）&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#E6F4EA;strokeColor=#34A853;fontColor=#0D652D;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;695&quot; y=&quot;390&quot; width=&quot;190&quot; height=&quot;96&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;s4&quot; value=&quot;Step 4　evict&amp;amp;#10;finished 移出 running&amp;amp;#10;腾出批名额&amp;amp;#10;（P6 P7 P10）&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#E6F4EA;strokeColor=#34A853;fontColor=#0D652D;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;905&quot; y=&quot;390&quot; width=&quot;190&quot; height=&quot;96&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;f1&quot; value=&quot;paged_kv.clear_sequence()&amp;amp;#10;清空池槽位&amp;amp;#10;（P7）&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FEF7E0;strokeColor=#F9AB00;fontColor=#8A5A00;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;95&quot; y=&quot;636&quot; width=&quot;210&quot; height=&quot;84&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;f2&quot; value=&quot;block_allocator.free()&amp;amp;#10;归还逻辑块&amp;amp;#10;（P6）&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FEF7E0;strokeColor=#F9AB00;fontColor=#8A5A00;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;329&quot; y=&quot;636&quot; width=&quot;210&quot; height=&quot;84&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;f3&quot; value=&quot;record_request_finished()&amp;amp;#10;吞吐 / SLO 记账&amp;amp;#10;（P10）&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FEF7E0;strokeColor=#F9AB00;fontColor=#8A5A00;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;563&quot; y=&quot;636&quot; width=&quot;210&quot; height=&quot;84&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;f4&quot; value=&quot;future.set_result(seq)&amp;amp;#10;唤醒 endpoint_generate&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FEF7E0;strokeColor=#F9AB00;fontColor=#8A5A00;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;797&quot; y=&quot;636&quot; width=&quot;210&quot; height=&quot;84&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;edge0&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#5F6368;fontSize=10;fontColor=#5F6368;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;e1&quot; target=&quot;e2&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;edge1&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#5F6368;fontSize=10;fontColor=#5F6368;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;e2&quot; target=&quot;e3&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;edge2&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#5F6368;fontSize=10;fontColor=#5F6368;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;e3&quot; target=&quot;e4&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;edge3&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#5F6368;fontSize=10;fontColor=#5F6368;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;e4&quot; target=&quot;e5&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;edge4&quot; value=&quot;入队&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#5F6368;fontSize=10;fontColor=#5F6368;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;e4&quot; target=&quot;w4&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;Array as=&quot;points&quot;&gt;&lt;mxPoint x=&quot;760&quot; y=&quot;130&quot;/&gt;&lt;mxPoint x=&quot;671&quot; y=&quot;130&quot;/&gt;&lt;/Array&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;edge5&quot; value=&quot;提供组件（所有序列共享）&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#5F6368;fontSize=10;fontColor=#5F6368;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;580&quot; y=&quot;270&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;580&quot; y=&quot;320&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;edge6&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#5F6368;fontSize=10;fontColor=#5F6368;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;s0&quot; target=&quot;s1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;edge7&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#5F6368;fontSize=10;fontColor=#5F6368;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;s1&quot; target=&quot;s2&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;edge8&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#5F6368;fontSize=10;fontColor=#5F6368;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;s2&quot; target=&quot;s3&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;edge9&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#5F6368;fontSize=10;fontColor=#5F6368;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;s3&quot; target=&quot;s4&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;edge10&quot; value=&quot;下一个 iteration&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#5F6368;fontSize=10;fontColor=#5F6368;dashed=1;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;s4&quot; target=&quot;s0&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;Array as=&quot;points&quot;&gt;&lt;mxPoint x=&quot;1000&quot; y=&quot;370&quot;/&gt;&lt;mxPoint x=&quot;160&quot; y=&quot;370&quot;/&gt;&lt;/Array&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;edge11&quot; value=&quot;序列 finished&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#5F6368;fontSize=10;fontColor=#5F6368;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;1000&quot; y=&quot;486&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;1000&quot; y=&quot;580&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;edge12&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#5F6368;fontSize=10;fontColor=#5F6368;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;f1&quot; target=&quot;f2&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;edge13&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#5F6368;fontSize=10;fontColor=#5F6368;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;f2&quot; target=&quot;f3&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;edge14&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#5F6368;fontSize=10;fontColor=#5F6368;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;f3&quot; target=&quot;f4&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;edge15&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#5F6368;fontSize=10;fontColor=#5F6368;dashed=1;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;f4&quot; target=&quot;e5&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;Array as=&quot;points&quot;&gt;&lt;mxPoint x=&quot;1140&quot; y=&quot;678&quot;/&gt;&lt;mxPoint x=&quot;1140&quot; y=&quot;53&quot;/&gt;&lt;/Array&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+      &lt;/root&gt;
+    &lt;/mxGraphModel&gt;
+  &lt;/diagram&gt;
+&lt;/mxfile&gt;" style="background-color: transparent;">
+  <defs/>
+  <rect x="40" y="130" width="1080" height="140" fill="#F8F9FA" stroke="#C7CDD4" stroke-dasharray="6 4" />
+  <text x="54" y="154" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="13" font-weight="bold" fill="#202124">接线层　__init__ (:161)　在 scheduler 启动时跑一次</text>
+  <rect x="40" y="320" width="1080" height="200" fill="#F8F9FA" stroke="#C7CDD4" stroke-dasharray="6 4" />
+  <text x="54" y="344" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="13" font-weight="bold" fill="#202124">执行层　run_loop() (:1056) → _schedule() (:899)　每个 iteration 重复</text>
+  <rect x="40" y="580" width="1080" height="150" fill="#F8F9FA" stroke="#C7CDD4" stroke-dasharray="6 4" />
+  <text x="54" y="604" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="13" font-weight="bold" fill="#202124">收尾层　_resolve_sequence_future() (:783)　序列结束时跑一次</text>
+  <rect x="40" y="30" width="180" height="46" rx="6" ry="6" fill="#F1F3F4" stroke="#9AA0A6" />
+  <text x="130.0" y="59" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="12.5" text-anchor="middle" fill="#3C4043">HTTP POST /generate</text>
+  <rect x="240" y="30" width="210" height="46" rx="6" ry="6" fill="#F1F3F4" stroke="#9AA0A6" />
+  <text x="345.0" y="59" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="12.5" text-anchor="middle" fill="#3C4043">app_v2.endpoint_generate()</text>
+  <rect x="470" y="30" width="170" height="46" rx="6" ry="6" fill="#F1F3F4" stroke="#9AA0A6" />
+  <text x="555.0" y="59" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="12.5" text-anchor="middle" fill="#3C4043">add_request()</text>
+  <text x="555.0" y="72" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="9.5" text-anchor="middle" fill="#5F6368">（P2）</text>
+  <rect x="660" y="30" width="200" height="46" rx="6" ry="6" fill="#F1F3F4" stroke="#9AA0A6" />
+  <text x="760.0" y="59" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="12.5" text-anchor="middle" fill="#3C4043">RequestQueue.enqueue()</text>
+  <text x="760.0" y="72" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="9.5" text-anchor="middle" fill="#5F6368">（P3）</text>
+  <rect x="880" y="30" width="140" height="46" rx="6" ry="6" fill="#F1F3F4" stroke="#9AA0A6" />
+  <text x="950.0" y="59" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="12.5" text-anchor="middle" fill="#3C4043">await future</text>
+  <rect x="80" y="185" width="150" height="66" rx="6" ry="6" fill="#E8F0FE" stroke="#4285F4" />
+  <text x="155.0" y="209" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="12.5" font-weight="bold" text-anchor="middle" fill="#174EA6">BlockAllocator</text>
+  <text x="155.0" y="229" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="normal" text-anchor="middle" fill="#174EA6">逻辑块账本</text>
+  <text x="155.0" y="261" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10" text-anchor="middle" fill="#5F6368">（P6）</text>
+  <rect x="252" y="185" width="150" height="66" rx="6" ry="6" fill="#E8F0FE" stroke="#4285F4" />
+  <text x="327.0" y="209" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="12.5" font-weight="bold" text-anchor="middle" fill="#174EA6">PagedKVCache</text>
+  <text x="327.0" y="229" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="normal" text-anchor="middle" fill="#174EA6">物理 KV 大 tensor</text>
+  <text x="327.0" y="261" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10" text-anchor="middle" fill="#5F6368">（P7）</text>
+  <rect x="424" y="185" width="150" height="66" rx="6" ry="6" fill="#E8F0FE" stroke="#4285F4" />
+  <text x="499.0" y="209" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="12.5" font-weight="bold" text-anchor="middle" fill="#174EA6">CPUSwapManager</text>
+  <text x="499.0" y="229" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="normal" text-anchor="middle" fill="#174EA6">CPU 临时仓</text>
+  <text x="499.0" y="261" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10" text-anchor="middle" fill="#5F6368">（P9）</text>
+  <rect x="596" y="185" width="150" height="66" rx="6" ry="6" fill="#E8F0FE" stroke="#4285F4" />
+  <text x="671.0" y="209" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="12.5" font-weight="bold" text-anchor="middle" fill="#174EA6">RequestQueue</text>
+  <text x="671.0" y="229" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="normal" text-anchor="middle" fill="#174EA6">等待队列 + 超时</text>
+  <text x="671.0" y="261" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10" text-anchor="middle" fill="#5F6368">（P3）</text>
+  <rect x="768" y="185" width="150" height="66" rx="6" ry="6" fill="#E8F0FE" stroke="#4285F4" />
+  <text x="843.0" y="209" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="12.5" font-weight="bold" text-anchor="middle" fill="#174EA6">StageTracker</text>
+  <text x="843.0" y="229" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="normal" text-anchor="middle" fill="#174EA6">prefill/decode 计时</text>
+  <text x="843.0" y="261" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10" text-anchor="middle" fill="#5F6368">（P4）</text>
+  <rect x="940" y="185" width="150" height="66" rx="6" ry="6" fill="#E8F0FE" stroke="#4285F4" />
+  <text x="1015.0" y="209" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="12.5" font-weight="bold" text-anchor="middle" fill="#174EA6">MetricsAggregator</text>
+  <text x="1015.0" y="229" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="normal" text-anchor="middle" fill="#174EA6">分位数 / SLO</text>
+  <text x="1015.0" y="261" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10" text-anchor="middle" fill="#5F6368">（P10）</text>
+  <rect x="65" y="390" width="190" height="96" rx="6" ry="6" fill="#E6F4EA" stroke="#34A853" />
+  <text x="160.0" y="414" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="12.5" font-weight="bold" text-anchor="middle" fill="#0D652D">Step 0　swap-in</text>
+  <text x="160.0" y="434" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="normal" text-anchor="middle" fill="#0D652D">把被换出的序列换回设备</text>
+  <text x="160.0" y="452" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#0D652D">块够才换</text>
+  <text x="160.0" y="466" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10" text-anchor="middle" fill="#5F6368">（P9）</text>
+  <rect x="275" y="390" width="190" height="96" rx="6" ry="6" fill="#E6F4EA" stroke="#34A853" />
+  <text x="370.0" y="414" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="12.5" font-weight="bold" text-anchor="middle" fill="#0D652D">Step 1　admit</text>
+  <text x="370.0" y="434" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="normal" text-anchor="middle" fill="#0D652D">队列 → running</text>
+  <text x="370.0" y="452" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#0D652D">只登记，不 forward</text>
+  <text x="370.0" y="466" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10" text-anchor="middle" fill="#5F6368">（P3 P4）</text>
+  <rect x="485" y="390" width="190" height="96" rx="6" ry="6" fill="#E6F4EA" stroke="#34A853" />
+  <text x="580.0" y="414" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="12.5" font-weight="bold" text-anchor="middle" fill="#0D652D">Step 2　chunked prefill</text>
+  <text x="580.0" y="434" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="normal" text-anchor="middle" fill="#0D652D">一次 ≤ chunk_size token</text>
+  <text x="580.0" y="452" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#0D652D">受 prefill_budget 限制</text>
+  <text x="580.0" y="466" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10" text-anchor="middle" fill="#5F6368">（P4 P6 P7）</text>
+  <rect x="695" y="390" width="190" height="96" rx="6" ry="6" fill="#E6F4EA" stroke="#34A853" />
+  <text x="790.0" y="414" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="12.5" font-weight="bold" text-anchor="middle" fill="#0D652D">Step 3　decode</text>
+  <text x="790.0" y="434" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="normal" text-anchor="middle" fill="#0D652D">每个 decoding 序列推 1 token</text>
+  <text x="790.0" y="452" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#0D652D">批内一起 forward</text>
+  <text x="790.0" y="466" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10" text-anchor="middle" fill="#5F6368">（P2 P8 P9）</text>
+  <rect x="905" y="390" width="190" height="96" rx="6" ry="6" fill="#E6F4EA" stroke="#34A853" />
+  <text x="1000.0" y="414" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="12.5" font-weight="bold" text-anchor="middle" fill="#0D652D">Step 4　evict</text>
+  <text x="1000.0" y="434" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="normal" text-anchor="middle" fill="#0D652D">finished 移出 running</text>
+  <text x="1000.0" y="452" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#0D652D">腾出批名额</text>
+  <text x="1000.0" y="466" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10" text-anchor="middle" fill="#5F6368">（P6 P7 P10）</text>
+  <rect x="95" y="636" width="210" height="84" rx="6" ry="6" fill="#FEF7E0" stroke="#F9AB00" />
+  <text x="200.0" y="660" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="12.5" font-weight="bold" text-anchor="middle" fill="#8A5A00">paged_kv.clear_sequence()</text>
+  <text x="200.0" y="680" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="normal" text-anchor="middle" fill="#8A5A00">清空池槽位</text>
+  <text x="200.0" y="712" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10" text-anchor="middle" fill="#5F6368">（P7）</text>
+  <rect x="329" y="636" width="210" height="84" rx="6" ry="6" fill="#FEF7E0" stroke="#F9AB00" />
+  <text x="434.0" y="660" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="12.5" font-weight="bold" text-anchor="middle" fill="#8A5A00">block_allocator.free()</text>
+  <text x="434.0" y="680" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="normal" text-anchor="middle" fill="#8A5A00">归还逻辑块</text>
+  <text x="434.0" y="712" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10" text-anchor="middle" fill="#5F6368">（P6）</text>
+  <rect x="563" y="636" width="210" height="84" rx="6" ry="6" fill="#FEF7E0" stroke="#F9AB00" />
+  <text x="668.0" y="660" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="12.5" font-weight="bold" text-anchor="middle" fill="#8A5A00">record_request_finished()</text>
+  <text x="668.0" y="680" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="normal" text-anchor="middle" fill="#8A5A00">吞吐 / SLO 记账</text>
+  <text x="668.0" y="712" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10" text-anchor="middle" fill="#5F6368">（P10）</text>
+  <rect x="797" y="636" width="210" height="84" rx="6" ry="6" fill="#FEF7E0" stroke="#F9AB00" />
+  <text x="902.0" y="660" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="12.5" font-weight="bold" text-anchor="middle" fill="#8A5A00">future.set_result(seq)</text>
+  <text x="902.0" y="680" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="normal" text-anchor="middle" fill="#8A5A00">唤醒 endpoint_generate</text>
+  <polyline points="220,53 240,53" fill="none" stroke="#5F6368" stroke-width="1.6" />
+  <polygon points="240,53 231,48 231,58" fill="#5F6368" />
+  <polyline points="450,53 470,53" fill="none" stroke="#5F6368" stroke-width="1.6" />
+  <polygon points="470,53 461,48 461,58" fill="#5F6368" />
+  <polyline points="640,53 660,53" fill="none" stroke="#5F6368" stroke-width="1.6" />
+  <polygon points="660,53 651,48 651,58" fill="#5F6368" />
+  <polyline points="860,53 880,53" fill="none" stroke="#5F6368" stroke-width="1.6" />
+  <polygon points="880,53 871,48 871,58" fill="#5F6368" />
+  <polyline points="760,76 760,130 671,130 671,185" fill="none" stroke="#5F6368" stroke-width="1.6" />
+  <polygon points="671,185 666,176 676,176" fill="#5F6368" />
+  <text x="700" y="122" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" text-anchor="middle" fill="#5F6368">入队</text>
+  <polyline points="580,270 580,320" fill="none" stroke="#5F6368" stroke-width="1.6" />
+  <polygon points="580,320 575,311 585,311" fill="#5F6368" />
+  <text x="596" y="302" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" text-anchor="start" fill="#5F6368">提供组件（所有序列共享）</text>
+  <polyline points="255,438 275,438" fill="none" stroke="#5F6368" stroke-width="1.6" />
+  <polygon points="275,438 266,433 266,443" fill="#5F6368" />
+  <polyline points="465,438 485,438" fill="none" stroke="#5F6368" stroke-width="1.6" />
+  <polygon points="485,438 476,433 476,443" fill="#5F6368" />
+  <polyline points="675,438 695,438" fill="none" stroke="#5F6368" stroke-width="1.6" />
+  <polygon points="695,438 686,433 686,443" fill="#5F6368" />
+  <polyline points="885,438 905,438" fill="none" stroke="#5F6368" stroke-width="1.6" />
+  <polygon points="905,438 896,433 896,443" fill="#5F6368" />
+  <polyline points="1000,390 1000,370 160,370 160,390" fill="none" stroke="#5F6368" stroke-width="1.6" stroke-dasharray="6 4" />
+  <polygon points="160,390 155,381 165,381" fill="#5F6368" />
+  <text x="560" y="363" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" text-anchor="middle" fill="#5F6368">下一个 iteration</text>
+  <polyline points="1000,486 1000,580" fill="none" stroke="#5F6368" stroke-width="1.6" />
+  <polygon points="1000,580 995,571 1005,571" fill="#5F6368" />
+  <text x="1012" y="534" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" text-anchor="start" fill="#5F6368">序列 finished</text>
+  <polyline points="305,678 329,678" fill="none" stroke="#5F6368" stroke-width="1.6" />
+  <polygon points="329,678 320,673 320,683" fill="#5F6368" />
+  <polyline points="539,678 563,678" fill="none" stroke="#5F6368" stroke-width="1.6" />
+  <polygon points="563,678 554,673 554,683" fill="#5F6368" />
+  <polyline points="773,678 797,678" fill="none" stroke="#5F6368" stroke-width="1.6" />
+  <polygon points="797,678 788,673 788,683" fill="#5F6368" />
+  <polyline points="1007,678 1140,678 1140,53 1020,53" fill="none" stroke="#5F6368" stroke-width="1.6" stroke-dasharray="6 4" />
+  <polygon points="1020,53 1029,48 1029,58" fill="#5F6368" />
+  <text x="1150" y="366" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" fill="#5F6368" transform="rotate(-90 1150 366)" text-anchor="middle">future 解析 → 响应 JSON</text>
+</svg>

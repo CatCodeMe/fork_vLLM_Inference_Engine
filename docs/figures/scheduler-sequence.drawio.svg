@@ -1,0 +1,266 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="1180" height="960" viewBox="0 0 1180 960" content="&lt;mxfile host=&quot;vscode&quot; version=&quot;24.7.17&quot; type=&quot;device&quot;&gt;
+  &lt;diagram id=&quot;scheduler-sequence&quot; name=&quot;Phase 2 请求生命周期&quot;&gt;
+    &lt;mxGraphModel dx=&quot;1200&quot; dy=&quot;900&quot; grid=&quot;1&quot; gridSize=&quot;10&quot; guides=&quot;1&quot; tooltips=&quot;1&quot; connect=&quot;1&quot; arrows=&quot;1&quot; fold=&quot;1&quot; page=&quot;1&quot; pageScale=&quot;1&quot; pageWidth=&quot;1180&quot; pageHeight=&quot;960&quot; math=&quot;0&quot; shadow=&quot;0&quot;&gt;
+      &lt;root&gt;
+        &lt;mxCell id=&quot;0&quot;/&gt;
+        &lt;mxCell id=&quot;1&quot; parent=&quot;0&quot;/&gt;
+        &lt;mxCell id=&quot;v1&quot; value=&quot;Client / HTTP&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#F1F3F4;strokeColor=#9AA0A6;fontColor=#3C4043;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;2&quot; y=&quot;20&quot; width=&quot;176&quot; height=&quot;56&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v2&quot; value=&quot;endpoint_generate()&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#F1F3F4;strokeColor=#9AA0A6;fontColor=#3C4043;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;202&quot; y=&quot;20&quot; width=&quot;176&quot; height=&quot;56&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v3&quot; value=&quot;scheduler.py&amp;amp;#10;add_request / run_loop&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#F1F3F4;strokeColor=#9AA0A6;fontColor=#3C4043;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;402&quot; y=&quot;20&quot; width=&quot;176&quot; height=&quot;56&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v4&quot; value=&quot;RequestQueue&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#F1F3F4;strokeColor=#9AA0A6;fontColor=#3C4043;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;602&quot; y=&quot;20&quot; width=&quot;176&quot; height=&quot;56&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v5&quot; value=&quot;paged pool&amp;amp;#10;blocks · model&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#F1F3F4;strokeColor=#9AA0A6;fontColor=#3C4043;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;802&quot; y=&quot;20&quot; width=&quot;176&quot; height=&quot;56&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v6&quot; value=&quot;future&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#F1F3F4;strokeColor=#9AA0A6;fontColor=#3C4043;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;1002&quot; y=&quot;20&quot; width=&quot;176&quot; height=&quot;56&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e7&quot; value=&quot;&quot; style=&quot;endArrow=none;html=1;rounded=0;strokeColor=#9AA0A6;dashed=1;strokeWidth=1.2;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;90&quot; y=&quot;76&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;90&quot; y=&quot;930&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e8&quot; value=&quot;&quot; style=&quot;endArrow=none;html=1;rounded=0;strokeColor=#9AA0A6;dashed=1;strokeWidth=1.2;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;290&quot; y=&quot;76&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;290&quot; y=&quot;930&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e9&quot; value=&quot;&quot; style=&quot;endArrow=none;html=1;rounded=0;strokeColor=#9AA0A6;dashed=1;strokeWidth=1.2;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;490&quot; y=&quot;76&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;490&quot; y=&quot;930&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e10&quot; value=&quot;&quot; style=&quot;endArrow=none;html=1;rounded=0;strokeColor=#9AA0A6;dashed=1;strokeWidth=1.2;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;690&quot; y=&quot;76&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;690&quot; y=&quot;930&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e11&quot; value=&quot;&quot; style=&quot;endArrow=none;html=1;rounded=0;strokeColor=#9AA0A6;dashed=1;strokeWidth=1.2;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;890&quot; y=&quot;76&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;890&quot; y=&quot;930&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e12&quot; value=&quot;&quot; style=&quot;endArrow=none;html=1;rounded=0;strokeColor=#9AA0A6;dashed=1;strokeWidth=1.2;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;1090&quot; y=&quot;76&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;1090&quot; y=&quot;930&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v13&quot; value=&quot;&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF8E1;strokeColor=#F9AB00;fontColor=#8A5A00;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;235&quot; y=&quot;340&quot; width=&quot;110&quot; height=&quot;460&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v14&quot; value=&quot;&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F0FE;strokeColor=#4285F4;fontColor=#174EA6;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;484&quot; y=&quot;150&quot; width=&quot;12&quot; height=&quot;780&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v15&quot; value=&quot;&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F0FE;strokeColor=#4285F4;fontColor=#174EA6;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;684&quot; y=&quot;195&quot; width=&quot;12&quot; height=&quot;85&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v16&quot; value=&quot;&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F0FE;strokeColor=#4285F4;fontColor=#174EA6;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;884&quot; y=&quot;545&quot; width=&quot;12&quot; height=&quot;230&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v17&quot; value=&quot;&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F0FE;strokeColor=#4285F4;fontColor=#174EA6;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;1084&quot; y=&quot;790&quot; width=&quot;12&quot; height=&quot;70&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e18&quot; value=&quot;&quot; style=&quot;endArrow=none;html=1;rounded=0;strokeColor=#5F6368;dashed=1;strokeWidth=1.2;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;455&quot; y=&quot;530&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;455&quot; y=&quot;690&quot; as=&quot;targetPoint&quot;/&gt;
+            &lt;Array as=&quot;points&quot;&gt;&lt;mxPoint x=&quot;440&quot; y=&quot;530&quot;/&gt;&lt;mxPoint x=&quot;440&quot; y=&quot;690&quot;/&gt;&lt;/Array&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e19&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#202124;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;90&quot; y=&quot;110&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;290&quot; y=&quot;110&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e20&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#1A73E8;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;290&quot; y=&quot;160&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;490&quot; y=&quot;160&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e21&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#1A73E8;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;490&quot; y=&quot;210&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;690&quot; y=&quot;210&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e22&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#1A73E8;dashed=1;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;690&quot; y=&quot;258&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;490&quot; y=&quot;258&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e23&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#1A73E8;dashed=1;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;490&quot; y=&quot;306&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;290&quot; y=&quot;306&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e24&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#5F6368;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;500&quot; y=&quot;390&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;500&quot; y=&quot;410&quot; as=&quot;targetPoint&quot;/&gt;
+            &lt;Array as=&quot;points&quot;&gt;&lt;mxPoint x=&quot;560&quot; y=&quot;390&quot;/&gt;&lt;mxPoint x=&quot;560&quot; y=&quot;410&quot;/&gt;&lt;/Array&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e25&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#34A853;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;690&quot; y=&quot;470&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;490&quot; y=&quot;470&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e26&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#34A853;dashed=1;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;490&quot; y=&quot;515&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;690&quot; y=&quot;515&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e27&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#F9AB00;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;490&quot; y=&quot;565&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;890&quot; y=&quot;565&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e28&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#F9AB00;dashed=1;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;890&quot; y=&quot;605&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;490&quot; y=&quot;605&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e29&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#F9AB00;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;490&quot; y=&quot;650&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;890&quot; y=&quot;650&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e30&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#EA4335;dashed=1;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;500&quot; y=&quot;700&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;500&quot; y=&quot;722&quot; as=&quot;targetPoint&quot;/&gt;
+            &lt;Array as=&quot;points&quot;&gt;&lt;mxPoint x=&quot;560&quot; y=&quot;700&quot;/&gt;&lt;mxPoint x=&quot;560&quot; y=&quot;722&quot;/&gt;&lt;/Array&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e31&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#8D6E63;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;490&quot; y=&quot;760&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;890&quot; y=&quot;760&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e32&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#EA4335;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;490&quot; y=&quot;805&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;1090&quot; y=&quot;805&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e33&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#EA4335;dashed=1;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;1090&quot; y=&quot;850&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;290&quot; y=&quot;850&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e34&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#202124;dashed=1;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;290&quot; y=&quot;894&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;90&quot; y=&quot;894&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+      &lt;/root&gt;
+    &lt;/mxGraphModel&gt;
+  &lt;/diagram&gt;
+&lt;/mxfile&gt;" style="background-color: transparent;">
+  <rect x="2" y="20" width="176" height="56" rx="6" ry="6" fill="#F1F3F4" stroke="#9AA0A6" />
+  <text x="90.0" y="53.4432" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#3C4043">Client / HTTP</text>
+  <rect x="202" y="20" width="176" height="56" rx="6" ry="6" fill="#F1F3F4" stroke="#9AA0A6" />
+  <text x="290.0" y="53.4432" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#3C4043">endpoint_generate()</text>
+  <rect x="402" y="20" width="176" height="56" rx="6" ry="6" fill="#F1F3F4" stroke="#9AA0A6" />
+  <text x="490.0" y="43.7232" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#3C4043">scheduler.py</text>
+  <text x="490.0" y="63.163199999999996" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="12" font-weight="normal" text-anchor="middle" fill="#3C4043">add_request / run_loop</text>
+  <rect x="602" y="20" width="176" height="56" rx="6" ry="6" fill="#F1F3F4" stroke="#9AA0A6" />
+  <text x="690.0" y="53.4432" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#3C4043">RequestQueue</text>
+  <rect x="802" y="20" width="176" height="56" rx="6" ry="6" fill="#F1F3F4" stroke="#9AA0A6" />
+  <text x="890.0" y="43.7232" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#3C4043">paged pool</text>
+  <text x="890.0" y="63.163199999999996" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="12" font-weight="normal" text-anchor="middle" fill="#3C4043">blocks · model</text>
+  <rect x="1002" y="20" width="176" height="56" rx="6" ry="6" fill="#F1F3F4" stroke="#9AA0A6" />
+  <text x="1090.0" y="53.4432" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#3C4043">future</text>
+  <polyline points="90,76 90,930" fill="none" stroke="#9AA0A6" stroke-width="1.2" stroke-dasharray="6 4" />
+  <polyline points="290,76 290,930" fill="none" stroke="#9AA0A6" stroke-width="1.2" stroke-dasharray="6 4" />
+  <polyline points="490,76 490,930" fill="none" stroke="#9AA0A6" stroke-width="1.2" stroke-dasharray="6 4" />
+  <polyline points="690,76 690,930" fill="none" stroke="#9AA0A6" stroke-width="1.2" stroke-dasharray="6 4" />
+  <polyline points="890,76 890,930" fill="none" stroke="#9AA0A6" stroke-width="1.2" stroke-dasharray="6 4" />
+  <polyline points="1090,76 1090,930" fill="none" stroke="#9AA0A6" stroke-width="1.2" stroke-dasharray="6 4" />
+  <rect x="235" y="340" width="110" height="460" rx="4" ry="4" fill="#FFF8E1" stroke="#F9AB00" />
+  <text x="290" y="545" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11.5" font-weight="bold" text-anchor="middle" fill="#8A5A00">await future</text>
+  <text x="290" y="565" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#8A5A00">handler 挂起</text>
+  <text x="290" y="581" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#8A5A00">不占 CPU</text>
+  <rect x="484" y="150" width="12" height="780" rx="4" ry="4" fill="#E8F0FE" stroke="#4285F4" />
+  <rect x="684" y="195" width="12" height="85" rx="4" ry="4" fill="#E8F0FE" stroke="#4285F4" />
+  <rect x="884" y="545" width="12" height="230" rx="4" ry="4" fill="#E8F0FE" stroke="#4285F4" />
+  <rect x="1084" y="790" width="12" height="70" rx="4" ry="4" fill="#E8F0FE" stroke="#4285F4" />
+  <polyline points="455,530 440,530 440,690 455,690" fill="none" stroke="#5F6368" stroke-width="1.2" stroke-dasharray="6 4" />
+  <text x="428" y="610" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#5F6368" transform="rotate(-90 428 610)">loop：每个 token 一次</text>
+  <polyline points="90,110 290,110" fill="none" stroke="#202124" stroke-width="1.6" />
+  <polygon points="290,110 281,105 281,115" fill="#202124" />
+  <text x="190" y="100" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="normal" text-anchor="middle" fill="#202124">POST /generate</text>
+  <polyline points="290,160 490,160" fill="none" stroke="#1A73E8" stroke-width="1.6" />
+  <polygon points="490,160 481,155 481,165" fill="#1A73E8" />
+  <text x="390" y="132" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="normal" text-anchor="middle" fill="#1A73E8">add_request()</text>
+  <text x="390" y="147" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#1A73E8">分词 → Sequence.create</text>
+  <polyline points="490,210 690,210" fill="none" stroke="#1A73E8" stroke-width="1.6" />
+  <polygon points="690,210 681,205 681,215" fill="#1A73E8" />
+  <text x="590" y="200" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#1A73E8">enqueue(seq) → future</text>
+  <polyline points="690,258 490,258" fill="none" stroke="#1A73E8" stroke-width="1.6" stroke-dasharray="6 4" />
+  <polygon points="490,258 499,253 499,263" fill="#1A73E8" />
+  <text x="590" y="248" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#1A73E8">(seq, future)</text>
+  <polyline points="490,306 290,306" fill="none" stroke="#1A73E8" stroke-width="1.6" stroke-dasharray="6 4" />
+  <polygon points="290,306 299,301 299,311" fill="#1A73E8" />
+  <text x="390" y="296" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#1A73E8">return (seq, future)</text>
+  <polyline points="500,390 560,390 560,410 500,410" fill="none" stroke="#5F6368" stroke-width="1.6" />
+  <polygon points="500,410 509,405 509,415" fill="#5F6368" />
+  <text x="478" y="424" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="end" fill="#5F6368">run_loop() 后台循环</text>
+  <text x="478" y="441" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="end" fill="#5F6368">每步一次 _schedule()</text>
+  <polyline points="690,470 490,470" fill="none" stroke="#34A853" stroke-width="1.6" />
+  <polygon points="490,470 499,465 499,475" fill="#34A853" />
+  <text x="590" y="460" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#34A853">dequeue()　· Step 1 admit</text>
+  <polyline points="490,515 690,515" fill="none" stroke="#34A853" stroke-width="1.6" stroke-dasharray="6 4" />
+  <polygon points="690,515 681,510 681,520" fill="#34A853" />
+  <text x="590" y="505" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#34A853">seq</text>
+  <polyline points="490,565 890,565" fill="none" stroke="#F9AB00" stroke-width="1.6" />
+  <polygon points="890,565 881,560 881,570" fill="#F9AB00" />
+  <text x="502" y="553" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="start" fill="#F9AB00">Step 2 · chunked prefill：分配块 → forward → write_kv</text>
+  <polyline points="890,605 490,605" fill="none" stroke="#F9AB00" stroke-width="1.6" stroke-dasharray="6 4" />
+  <polygon points="490,605 499,600 499,610" fill="#F9AB00" />
+  <text x="878" y="595" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="end" fill="#F9AB00">next_token_id</text>
+  <polyline points="490,650 890,650" fill="none" stroke="#F9AB00" stroke-width="1.6" />
+  <polygon points="890,650 881,645 881,655" fill="#F9AB00" />
+  <text x="502" y="638" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="start" fill="#F9AB00">Step 3 · decode：forward → argmax → write_kv</text>
+  <polyline points="500,700 560,700 560,722 500,722" fill="none" stroke="#EA4335" stroke-width="1.6" stroke-dasharray="6 4" />
+  <polygon points="500,722 509,717 509,727" fill="#EA4335" />
+  <text x="480" y="712" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="end" fill="#EA4335">_try_swap_out_victim()</text>
+  <text x="480" y="729" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="end" fill="#EA4335">OOM 时换出最大序列后重试</text>
+  <polyline points="490,760 890,760" fill="none" stroke="#8D6E63" stroke-width="1.6" />
+  <polygon points="890,760 881,755 881,765" fill="#8D6E63" />
+  <text x="502" y="748" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="start" fill="#8D6E63">淘汰 finished：clear_sequence → free → set_result</text>
+  <polyline points="490,805 1090,805" fill="none" stroke="#EA4335" stroke-width="1.6" />
+  <polygon points="1090,805 1081,800 1081,810" fill="#EA4335" />
+  <text x="502" y="793" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="start" fill="#EA4335">_resolve_sequence_future() → future.set_result(seq)</text>
+  <polyline points="1090,850 290,850" fill="none" stroke="#EA4335" stroke-width="1.6" stroke-dasharray="6 4" />
+  <polygon points="290,850 299,845 299,855" fill="#EA4335" />
+  <text x="1078" y="840" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="end" fill="#EA4335">future 解析，handler 被唤醒</text>
+  <polyline points="290,894 90,894" fill="none" stroke="#202124" stroke-width="1.6" stroke-dasharray="6 4" />
+  <polygon points="90,894 99,889 99,899" fill="#202124" />
+  <text x="190" y="884" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="normal" text-anchor="middle" fill="#202124">HTTP 200 JSON</text>
+</svg>

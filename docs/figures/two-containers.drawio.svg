@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="1180" height="580" viewBox="0 0 1180 580" content="&lt;mxfile host=&quot;vscode&quot; version=&quot;24.7.17&quot; type=&quot;device&quot;&gt;
+  &lt;diagram id=&quot;two-containers&quot; name=&quot;waiting / running 两套容器&quot;&gt;
+    &lt;mxGraphModel dx=&quot;1200&quot; dy=&quot;900&quot; grid=&quot;1&quot; gridSize=&quot;10&quot; guides=&quot;1&quot; tooltips=&quot;1&quot; connect=&quot;1&quot; arrows=&quot;1&quot; fold=&quot;1&quot; page=&quot;1&quot; pageScale=&quot;1&quot; pageWidth=&quot;1180&quot; pageHeight=&quot;580&quot; math=&quot;0&quot; shadow=&quot;0&quot;&gt;
+      &lt;root&gt;
+        &lt;mxCell id=&quot;0&quot;/&gt;
+        &lt;mxCell id=&quot;1&quot; parent=&quot;0&quot;/&gt;
+        &lt;mxCell id=&quot;v1&quot; value=&quot;&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#F8F9FA;strokeColor=#9AA0A6;fontColor=#202124;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;40&quot; y=&quot;80&quot; width=&quot;250&quot; height=&quot;230&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v2&quot; value=&quot;Sequence　state=&amp;quot;waiting&amp;quot;&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F0FE;strokeColor=#4285F4;fontColor=#174EA6;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;60&quot; y=&quot;124&quot; width=&quot;210&quot; height=&quot;40&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v3&quot; value=&quot;Sequence　state=&amp;quot;waiting&amp;quot;&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F0FE;strokeColor=#4285F4;fontColor=#174EA6;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;60&quot; y=&quot;172&quot; width=&quot;210&quot; height=&quot;40&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v4&quot; value=&quot;Sequence　state=&amp;quot;waiting&amp;quot;&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F0FE;strokeColor=#4285F4;fontColor=#174EA6;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;60&quot; y=&quot;220&quot; width=&quot;210&quot; height=&quot;40&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v5&quot; value=&quot;admit（Step 1）&amp;amp;#10;len(running) &amp;lt; running_limit&amp;amp;#10;stamp prefill_chunk_size&amp;amp;#10;分配块：可能 OutOfBlocksError&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#8D6E63;fontColor=#4E342E;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;330&quot; y=&quot;140&quot; width=&quot;230&quot; height=&quot;120&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e6&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#5F6368;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;290&quot; y=&quot;195&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;330&quot; y=&quot;195&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e7&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#5F6368;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;560&quot; y=&quot;195&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;600&quot; y=&quot;195&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v8&quot; value=&quot;&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#F8F9FA;strokeColor=#9AA0A6;fontColor=#202124;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;600&quot; y=&quot;80&quot; width=&quot;250&quot; height=&quot;230&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v9&quot; value=&quot;chunked_prefilling&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FEF7E0;strokeColor=#F9AB00;fontColor=#8A5A00;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;620&quot; y=&quot;124&quot; width=&quot;210&quot; height=&quot;46&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v10&quot; value=&quot;decoding&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#E6F4EA;strokeColor=#34A853;fontColor=#0D652D;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;620&quot; y=&quot;190&quot; width=&quot;210&quot; height=&quot;46&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v11&quot; value=&quot;Step 4·淘汰 finished&amp;amp;#10;清 paged pool → 还块&amp;amp;#10;future.set_result → HTTP 200&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#E6F4EA;strokeColor=#34A853;fontColor=#0D652D;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;920&quot; y=&quot;80&quot; width=&quot;220&quot; height=&quot;104&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e12&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#34A853;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;850&quot; y=&quot;132&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;920&quot; y=&quot;132&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v13&quot; value=&quot;swapped_out（被抢占）&amp;amp;#10;largest-first 换到 CPU&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FCE8E6;strokeColor=#EA4335;fontColor=#A50E0E;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;920&quot; y=&quot;230&quot; width=&quot;220&quot; height=&quot;80&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e14&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#EA4335;dashed=1;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;850&quot; y=&quot;270&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;920&quot; y=&quot;270&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e15&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#EA4335;dashed=1;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;1030&quot; y=&quot;310&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;690&quot; y=&quot;310&quot; as=&quot;targetPoint&quot;/&gt;
+            &lt;Array as=&quot;points&quot;&gt;&lt;mxPoint x=&quot;1030&quot; y=&quot;346&quot;/&gt;&lt;mxPoint x=&quot;690&quot; y=&quot;346&quot;/&gt;&lt;/Array&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v16&quot; value=&quot;两个容器的区别不是「排队 vs 执行」，而是【不变量不同】&amp;amp;#10;&amp;amp;#10;waiting：什么都没占 → 所以能超时、能取消、能直接 503 拒绝（容量控制在这里做）&amp;amp;#10;running：已经占了 KV 块和批名额 → 每步都要遍历它、推进它；取消它要额外写代码（F20）&amp;amp;#10;&amp;amp;#10;而且 admit 不是简单 pop：它要做准入决策（running_limit）+ 冻结 chunk 大小 + 分配块（可能触发抢占）&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#F8F9FA;strokeColor=#C7CDD4;fontColor=#202124;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;40&quot; y=&quot;400&quot; width=&quot;1100&quot; height=&quot;150&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+      &lt;/root&gt;
+    &lt;/mxGraphModel&gt;
+  &lt;/diagram&gt;
+&lt;/mxfile&gt;" style="background-color: transparent;">
+  <rect x="40" y="80" width="250" height="230" rx="8" ry="8" fill="#F8F9FA" stroke="#9AA0A6" />
+  <text x="165" y="104" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11.5" font-weight="bold" text-anchor="middle" fill="#202124">request_queue（waiting）</text>
+  <rect x="60" y="124" width="210" height="40" rx="4" ry="4" fill="#E8F0FE" stroke="#4285F4" />
+  <text x="165.0" y="148.7628" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="bold" text-anchor="middle" fill="#174EA6">Sequence　state="waiting"</text>
+  <rect x="60" y="172" width="210" height="40" rx="4" ry="4" fill="#E8F0FE" stroke="#4285F4" />
+  <text x="165.0" y="196.7628" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="bold" text-anchor="middle" fill="#174EA6">Sequence　state="waiting"</text>
+  <rect x="60" y="220" width="210" height="40" rx="4" ry="4" fill="#E8F0FE" stroke="#4285F4" />
+  <text x="165.0" y="244.7628" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="bold" text-anchor="middle" fill="#174EA6">Sequence　state="waiting"</text>
+  <text x="165" y="288" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#34A853">不占 KV 块　不占批名额</text>
+  <text x="165" y="304" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#5F6368">有超时 / 可取消 / maxsize→503</text>
+  <rect x="330" y="140" width="230" height="120" rx="6" ry="6" fill="#FFFFFF" stroke="#8D6E63" />
+  <text x="445.0" y="180.91639999999998" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11.5" font-weight="bold" text-anchor="middle" fill="#4E342E">admit（Step 1）</text>
+  <text x="445.0" y="197.65099999999998" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10" font-weight="normal" text-anchor="middle" fill="#4E342E">len(running) &lt; running_limit</text>
+  <text x="445.0" y="213.85099999999997" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10" font-weight="normal" text-anchor="middle" fill="#4E342E">stamp prefill_chunk_size</text>
+  <text x="445.0" y="230.05099999999996" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10" font-weight="normal" text-anchor="middle" fill="#4E342E">分配块：可能 OutOfBlocksError</text>
+  <polyline points="290,195 330,195" fill="none" stroke="#5F6368" stroke-width="1.6" />
+  <polygon points="330,195 321,190 321,200" fill="#5F6368" />
+  <polyline points="560,195 600,195" fill="none" stroke="#5F6368" stroke-width="1.6" />
+  <polygon points="600,195 591,190 591,200" fill="#5F6368" />
+  <rect x="600" y="80" width="250" height="230" rx="8" ry="8" fill="#F8F9FA" stroke="#9AA0A6" />
+  <text x="725" y="104" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11.5" font-weight="bold" text-anchor="middle" fill="#202124">running（已准入）</text>
+  <rect x="620" y="124" width="210" height="46" rx="4" ry="4" fill="#FEF7E0" stroke="#F9AB00" />
+  <text x="725.0" y="151.9896" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#8A5A00">chunked_prefilling</text>
+  <rect x="620" y="190" width="210" height="46" rx="4" ry="4" fill="#E6F4EA" stroke="#34A853" />
+  <text x="725.0" y="217.9896" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#0D652D">decoding</text>
+  <text x="725" y="260" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#5F6368">每步：prefill 1 chunk 或 decode 1 token</text>
+  <text x="725" y="288" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#EA4335">已占 KV 块 + 批名额 → 不可取消（F20）</text>
+  <rect x="920" y="80" width="220" height="104" rx="6" ry="6" fill="#E6F4EA" stroke="#34A853" />
+  <text x="1030.0" y="120.2064" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11.5" font-weight="bold" text-anchor="middle" fill="#0D652D">Step 4·淘汰 finished</text>
+  <text x="1030.0" y="137.5728" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#0D652D">清 paged pool → 还块</text>
+  <text x="1030.0" y="154.5828" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#0D652D">future.set_result → HTTP 200</text>
+  <polyline points="850,132 920,132" fill="none" stroke="#34A853" stroke-width="1.6" />
+  <polygon points="920,132 911,127 911,137" fill="#34A853" />
+  <rect x="920" y="230" width="220" height="80" rx="6" ry="6" fill="#FCE8E6" stroke="#EA4335" />
+  <text x="1030.0" y="266.7114" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11.5" font-weight="bold" text-anchor="middle" fill="#A50E0E">swapped_out（被抢占）</text>
+  <text x="1030.0" y="284.07779999999997" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#A50E0E">largest-first 换到 CPU</text>
+  <polyline points="850,270 920,270" fill="none" stroke="#EA4335" stroke-width="1.6" stroke-dasharray="6 4" />
+  <polygon points="920,270 911,265 911,275" fill="#EA4335" />
+  <text x="838" y="232" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10" font-weight="normal" text-anchor="end" fill="#EA4335">OutOfBlocksError</text>
+  <polyline points="1030,310 1030,346 690,346 690,310" fill="none" stroke="#EA4335" stroke-width="1.6" stroke-dasharray="6 4" />
+  <polygon points="690,310 685,319 695,319" fill="#EA4335" />
+  <text x="860" y="366" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#EA4335">Step 0：块腾出来就 swap-in 回 running</text>
+  <rect x="40" y="400" width="1100" height="150" rx="6" ry="6" fill="#F8F9FA" stroke="#C7CDD4" />
+  <text x="590.0" y="445.6132" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#202124">两个容器的区别不是「排队 vs 执行」，而是【不变量不同】</text>
+  <text x="590.0" y="456.208" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="5" font-weight="normal" text-anchor="middle" fill="#202124"></text>
+  <text x="590.0" y="471.88960000000003" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="normal" text-anchor="middle" fill="#202124">waiting：什么都没占 → 所以能超时、能取消、能直接 503 拒绝（容量控制在这里做）</text>
+  <text x="590.0" y="489.7096" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="normal" text-anchor="middle" fill="#202124">running：已经占了 KV 块和批名额 → 每步都要遍历它、推进它；取消它要额外写代码（F20）</text>
+  <text x="590.0" y="499.94800000000004" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="5" font-weight="normal" text-anchor="middle" fill="#202124"></text>
+  <text x="590.0" y="515.6296000000001" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="normal" text-anchor="middle" fill="#202124">而且 admit 不是简单 pop：它要做准入决策（running_limit）+ 冻结 chunk 大小 + 分配块（可能触发抢占）</text>
+</svg>

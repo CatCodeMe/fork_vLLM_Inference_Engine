@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="1180" height="760" viewBox="0 0 1180 760" content="&lt;mxfile host=&quot;vscode&quot; version=&quot;24.7.17&quot; type=&quot;device&quot;&gt;
+  &lt;diagram id=&quot;scheduler-stages&quot; name=&quot;_schedule() 一次迭代&quot;&gt;
+    &lt;mxGraphModel dx=&quot;1200&quot; dy=&quot;900&quot; grid=&quot;1&quot; gridSize=&quot;10&quot; guides=&quot;1&quot; tooltips=&quot;1&quot; connect=&quot;1&quot; arrows=&quot;1&quot; fold=&quot;1&quot; page=&quot;1&quot; pageScale=&quot;1&quot; pageWidth=&quot;1180&quot; pageHeight=&quot;760&quot; math=&quot;0&quot; shadow=&quot;0&quot;&gt;
+      &lt;root&gt;
+        &lt;mxCell id=&quot;0&quot;/&gt;
+        &lt;mxCell id=&quot;1&quot; parent=&quot;0&quot;/&gt;
+        &lt;mxCell id=&quot;v1&quot; value=&quot;run_loop()　后台 asyncio.Task&amp;amp;#10;没事做时 sleep ~1ms&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#F1F3F4;strokeColor=#9AA0A6;fontColor=#3C4043;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;140&quot; y=&quot;40&quot; width=&quot;620&quot; height=&quot;60&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v2&quot; value=&quot;_schedule()　一次迭代&amp;amp;#10;顺序执行 Step 0 → Step 4&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#F8F9FA;strokeColor=#202124;fontColor=#202124;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;140&quot; y=&quot;140&quot; width=&quot;620&quot; height=&quot;60&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v3&quot; value=&quot;Step 0 · swap-in&amp;amp;#10;设备块够时，把之前换到 CPU 的序列换回来&amp;amp;#10;P9&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#E6F4EA;strokeColor=#34A853;fontColor=#0D652D;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;140&quot; y=&quot;240&quot; width=&quot;620&quot; height=&quot;60&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v4&quot; value=&quot;Step 1 · admit（只登记，不做前向）&amp;amp;#10;dequeue() → running，state = chunked_prefilling&amp;amp;#10;P3 P4&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F0FE;strokeColor=#4285F4;fontColor=#174EA6;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;140&quot; y=&quot;340&quot; width=&quot;620&quot; height=&quot;60&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v5&quot; value=&quot;Step 2 · chunked prefill（每序列一个 chunk）&amp;amp;#10;allocate 块 → forward → 写 paged pool；受 prefill_budget_tokens 限制&amp;amp;#10;P4 P6 P7&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FEF7E0;strokeColor=#F9AB00;fontColor=#8A5A00;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;140&quot; y=&quot;440&quot; width=&quot;620&quot; height=&quot;60&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v6&quot; value=&quot;Step 3 · decode（每个 decoding 序列 1 token）&amp;amp;#10;write_token → forward → argmax → 写 paged pool&amp;amp;#10;P2 P8 P9&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FEF7E0;strokeColor=#F9AB00;fontColor=#8A5A00;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;140&quot; y=&quot;540&quot; width=&quot;620&quot; height=&quot;60&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v7&quot; value=&quot;淘汰 finished&amp;amp;#10;清 paged pool → 释放块 → _resolve_sequence_future()&amp;amp;#10;P6 P7 P10&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#EFEBE9;strokeColor=#8D6E63;fontColor=#4E342E;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;140&quot; y=&quot;640&quot; width=&quot;620&quot; height=&quot;60&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e8&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#5F6368;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;450.0&quot; y=&quot;100&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;450.0&quot; y=&quot;140&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e9&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#5F6368;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;450.0&quot; y=&quot;200&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;450.0&quot; y=&quot;240&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e10&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#5F6368;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;450.0&quot; y=&quot;300&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;450.0&quot; y=&quot;340&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e11&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#5F6368;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;450.0&quot; y=&quot;400&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;450.0&quot; y=&quot;440&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e12&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#5F6368;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;450.0&quot; y=&quot;500&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;450.0&quot; y=&quot;540&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e13&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#5F6368;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;450.0&quot; y=&quot;600&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;450.0&quot; y=&quot;640&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v14&quot; value=&quot;OutOfBlocksError&amp;amp;#10;_try_swap_out_victim()&amp;amp;#10;把最大的 decoding 序列&amp;amp;#10;换出到 CPU，然后重试&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FCE8E6;strokeColor=#EA4335;fontColor=#A50E0E;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;830&quot; y=&quot;440&quot; width=&quot;310&quot; height=&quot;160&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e15&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#EA4335;dashed=1;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;760&quot; y=&quot;462&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;830&quot; y=&quot;462&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e16&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#EA4335;dashed=1;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;830&quot; y=&quot;492&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;760&quot; y=&quot;492&quot; as=&quot;targetPoint&quot;/&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e17&quot; value=&quot;&quot; style=&quot;endArrow=block;html=1;rounded=0;strokeColor=#5F6368;dashed=1;strokeWidth=1.6;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;mxPoint x=&quot;140&quot; y=&quot;670&quot; as=&quot;sourcePoint&quot;/&gt;
+            &lt;mxPoint x=&quot;140&quot; y=&quot;170&quot; as=&quot;targetPoint&quot;/&gt;
+            &lt;Array as=&quot;points&quot;&gt;&lt;mxPoint x=&quot;80&quot; y=&quot;670&quot;/&gt;&lt;mxPoint x=&quot;80&quot; y=&quot;170&quot;/&gt;&lt;/Array&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+      &lt;/root&gt;
+    &lt;/mxGraphModel&gt;
+  &lt;/diagram&gt;
+&lt;/mxfile&gt;" style="background-color: transparent;">
+  <rect x="140" y="40" width="620" height="60" rx="6" ry="6" fill="#F1F3F4" stroke="#9AA0A6" />
+  <text x="450.0" y="66.922" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="12.5" font-weight="bold" text-anchor="middle" fill="#3C4043">run_loop()　后台 asyncio.Task</text>
+  <text x="450.0" y="85.02387999999999" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.8" font-weight="normal" text-anchor="middle" fill="#3C4043">没事做时 sleep ~1ms</text>
+  <rect x="140" y="140" width="620" height="60" rx="6" ry="6" fill="#F8F9FA" stroke="#202124" />
+  <text x="450.0" y="166.922" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="12.5" font-weight="bold" text-anchor="middle" fill="#202124">_schedule()　一次迭代</text>
+  <text x="450.0" y="185.02388000000002" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.8" font-weight="normal" text-anchor="middle" fill="#202124">顺序执行 Step 0 → Step 4</text>
+  <rect x="140" y="240" width="620" height="60" rx="6" ry="6" fill="#E6F4EA" stroke="#34A853" />
+  <text x="450.0" y="258.922" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="12.5" font-weight="bold" text-anchor="middle" fill="#0D652D">Step 0 · swap-in</text>
+  <text x="450.0" y="277.02387999999996" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.8" font-weight="normal" text-anchor="middle" fill="#0D652D">设备块够时，把之前换到 CPU 的序列换回来</text>
+  <text x="450.0" y="292.873" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="9.8" font-weight="normal" text-anchor="middle" fill="#5F6368">P9</text>
+  <rect x="140" y="340" width="620" height="60" rx="6" ry="6" fill="#E8F0FE" stroke="#4285F4" />
+  <text x="450.0" y="358.922" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="12.5" font-weight="bold" text-anchor="middle" fill="#174EA6">Step 1 · admit（只登记，不做前向）</text>
+  <text x="450.0" y="377.02387999999996" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.8" font-weight="normal" text-anchor="middle" fill="#174EA6">dequeue() → running，state = chunked_prefilling</text>
+  <text x="450.0" y="392.873" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="9.8" font-weight="normal" text-anchor="middle" fill="#5F6368">P3 P4</text>
+  <rect x="140" y="440" width="620" height="60" rx="6" ry="6" fill="#FEF7E0" stroke="#F9AB00" />
+  <text x="450.0" y="458.922" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="12.5" font-weight="bold" text-anchor="middle" fill="#8A5A00">Step 2 · chunked prefill（每序列一个 chunk）</text>
+  <text x="450.0" y="477.02387999999996" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.8" font-weight="normal" text-anchor="middle" fill="#8A5A00">allocate 块 → forward → 写 paged pool；受 prefill_budget_tokens 限制</text>
+  <text x="450.0" y="492.873" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="9.8" font-weight="normal" text-anchor="middle" fill="#5F6368">P4 P6 P7</text>
+  <rect x="140" y="540" width="620" height="60" rx="6" ry="6" fill="#FEF7E0" stroke="#F9AB00" />
+  <text x="450.0" y="558.9219999999999" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="12.5" font-weight="bold" text-anchor="middle" fill="#8A5A00">Step 3 · decode（每个 decoding 序列 1 token）</text>
+  <text x="450.0" y="577.02388" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.8" font-weight="normal" text-anchor="middle" fill="#8A5A00">write_token → forward → argmax → 写 paged pool</text>
+  <text x="450.0" y="592.8729999999999" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="9.8" font-weight="normal" text-anchor="middle" fill="#5F6368">P2 P8 P9</text>
+  <rect x="140" y="640" width="620" height="60" rx="6" ry="6" fill="#EFEBE9" stroke="#8D6E63" />
+  <text x="450.0" y="658.9219999999999" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="12.5" font-weight="bold" text-anchor="middle" fill="#4E342E">淘汰 finished</text>
+  <text x="450.0" y="677.02388" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.8" font-weight="normal" text-anchor="middle" fill="#4E342E">清 paged pool → 释放块 → _resolve_sequence_future()</text>
+  <text x="450.0" y="692.8729999999999" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="9.8" font-weight="normal" text-anchor="middle" fill="#5F6368">P6 P7 P10</text>
+  <polyline points="450.0,100 450.0,140" fill="none" stroke="#5F6368" stroke-width="1.6" />
+  <polygon points="450.0,140 445.0,131 455.0,131" fill="#5F6368" />
+  <polyline points="450.0,200 450.0,240" fill="none" stroke="#5F6368" stroke-width="1.6" />
+  <polygon points="450.0,240 445.0,231 455.0,231" fill="#5F6368" />
+  <polyline points="450.0,300 450.0,340" fill="none" stroke="#5F6368" stroke-width="1.6" />
+  <polygon points="450.0,340 445.0,331 455.0,331" fill="#5F6368" />
+  <polyline points="450.0,400 450.0,440" fill="none" stroke="#5F6368" stroke-width="1.6" />
+  <polygon points="450.0,440 445.0,431 455.0,431" fill="#5F6368" />
+  <polyline points="450.0,500 450.0,540" fill="none" stroke="#5F6368" stroke-width="1.6" />
+  <polygon points="450.0,540 445.0,531 455.0,531" fill="#5F6368" />
+  <polyline points="450.0,600 450.0,640" fill="none" stroke="#5F6368" stroke-width="1.6" />
+  <polygon points="450.0,640 445.0,631 455.0,631" fill="#5F6368" />
+  <rect x="830" y="440" width="310" height="160" rx="6" ry="6" fill="#FCE8E6" stroke="#EA4335" />
+  <text x="985.0" y="499.264" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="12.5" font-weight="bold" text-anchor="middle" fill="#A50E0E">OutOfBlocksError</text>
+  <text x="985.0" y="517.6186" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="normal" text-anchor="middle" fill="#A50E0E">_try_swap_out_victim()</text>
+  <text x="985.0" y="535.18588" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.8" font-weight="normal" text-anchor="middle" fill="#A50E0E">把最大的 decoding 序列</text>
+  <text x="985.0" y="552.68188" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.8" font-weight="normal" text-anchor="middle" fill="#A50E0E">换出到 CPU，然后重试</text>
+  <polyline points="760,462 830,462" fill="none" stroke="#EA4335" stroke-width="1.6" stroke-dasharray="6 4" />
+  <polygon points="830,462 821,457 821,467" fill="#EA4335" />
+  <polyline points="830,492 760,492" fill="none" stroke="#EA4335" stroke-width="1.6" stroke-dasharray="6 4" />
+  <polygon points="760,492 769,487 769,497" fill="#EA4335" />
+  <text x="795" y="484" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#EA4335">retry</text>
+  <text x="985" y="628" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#A50E0E">Step 3 的 write_token 也会走这条路径</text>
+  <polyline points="140,670 80,670 80,170 140,170" fill="none" stroke="#5F6368" stroke-width="1.6" stroke-dasharray="6 4" />
+  <polygon points="140,170 131,165 131,175" fill="#5F6368" />
+  <text x="66" y="420" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#5F6368" transform="rotate(-90 66 420)">下一个 iteration（continuous batching）</text>
+</svg>

@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="1180" height="640" viewBox="0 0 1180 640" content="&lt;mxfile host=&quot;vscode&quot; version=&quot;24.7.17&quot; type=&quot;device&quot;&gt;
+  &lt;diagram id=&quot;prefill-chunking&quot; name=&quot;分块 prefill 时间线&quot;&gt;
+    &lt;mxGraphModel dx=&quot;1200&quot; dy=&quot;900&quot; grid=&quot;1&quot; gridSize=&quot;10&quot; guides=&quot;1&quot; tooltips=&quot;1&quot; connect=&quot;1&quot; arrows=&quot;1&quot; fold=&quot;1&quot; page=&quot;1&quot; pageScale=&quot;1&quot; pageWidth=&quot;1180&quot; pageHeight=&quot;640&quot; math=&quot;0&quot; shadow=&quot;0&quot;&gt;
+      &lt;root&gt;
+        &lt;mxCell id=&quot;0&quot;/&gt;
+        &lt;mxCell id=&quot;1&quot; parent=&quot;0&quot;/&gt;
+        &lt;mxCell id=&quot;v1&quot; value=&quot;chunk #0&amp;amp;#10;[0, 128)&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F0FE;strokeColor=#4285F4;fontColor=#174EA6;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;60&quot; y=&quot;66&quot; width=&quot;128&quot; height=&quot;56&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v2&quot; value=&quot;chunk #1&amp;amp;#10;[128, 256)&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F0FE;strokeColor=#4285F4;fontColor=#174EA6;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;192&quot; y=&quot;66&quot; width=&quot;128&quot; height=&quot;56&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v3&quot; value=&quot;chunk #2&amp;amp;#10;[256, 384)&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F0FE;strokeColor=#4285F4;fontColor=#174EA6;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;324&quot; y=&quot;66&quot; width=&quot;128&quot; height=&quot;56&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v4&quot; value=&quot;chunk #3&amp;amp;#10;[384, 512)&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F0FE;strokeColor=#4285F4;fontColor=#174EA6;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;456&quot; y=&quot;66&quot; width=&quot;128&quot; height=&quot;56&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v5&quot; value=&quot;chunk #4&amp;amp;#10;[512, 640)&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F0FE;strokeColor=#4285F4;fontColor=#174EA6;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;588&quot; y=&quot;66&quot; width=&quot;128&quot; height=&quot;56&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v6&quot; value=&quot;chunk #5&amp;amp;#10;[640, 768)&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F0FE;strokeColor=#4285F4;fontColor=#174EA6;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;720&quot; y=&quot;66&quot; width=&quot;128&quot; height=&quot;56&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v7&quot; value=&quot;chunk #6&amp;amp;#10;[768, 896)&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F0FE;strokeColor=#4285F4;fontColor=#174EA6;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;852&quot; y=&quot;66&quot; width=&quot;128&quot; height=&quot;56&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v8&quot; value=&quot;chunk #7&amp;amp;#10;[896, 1000)&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FEF7E0;strokeColor=#F9AB00;fontColor=#8A5A00;fontSize=12;dashed=1;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;984&quot; y=&quot;66&quot; width=&quot;128&quot; height=&quot;56&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v9&quot; value=&quot;step 1　forward(#0)　past_kv = None（冷启动）　→　写 pool 位置 0–127　　offset: 0 → 128&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#4285F4;fontColor=#202124;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;60&quot; y=&quot;176&quot; width=&quot;1060&quot; height=&quot;50&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v10&quot; value=&quot;step 2　forward(#1)　past_kv = 从 pool 读回 [0,128)　→　写 pool 位置 128–255　　offset: 128 → 256&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#4285F4;fontColor=#202124;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;60&quot; y=&quot;234&quot; width=&quot;1060&quot; height=&quot;50&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v11&quot; value=&quot;step 3　forward(#2)　past_kv = 从 pool 读回 [0,256)　→　写 pool 位置 256–383　　offset: 256 → 384&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#4285F4;fontColor=#202124;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;60&quot; y=&quot;292&quot; width=&quot;1060&quot; height=&quot;50&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v12&quot; value=&quot;step 8　forward(#7)　past_kv = 从 pool 读回 [0,896)　→　写 pool 位置 896–999　　offset: 896 → 1000　然后采样首个 token，state → decoding&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#E6F4EA;strokeColor=#34A853;fontColor=#0D652D;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;60&quot; y=&quot;396&quot; width=&quot;1060&quot; height=&quot;50&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;v13&quot; value=&quot;⚠️ chunk 之间是【串行】的，不是并行：chunk N 必须等 chunk N−1 的 KV 算完&amp;amp;#10;分块的目的不是加速，而是每段之后【让出调度点】——让其它序列的 decode 能插进来&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FCE8E6;strokeColor=#EA4335;fontColor=#A50E0E;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;60&quot; y=&quot;466&quot; width=&quot;1060&quot; height=&quot;74&quot; as=&quot;geometry&quot;/&gt;
+        &lt;/mxCell&gt;
+      &lt;/root&gt;
+    &lt;/mxGraphModel&gt;
+  &lt;/diagram&gt;
+&lt;/mxfile&gt;" style="background-color: transparent;">
+  <text x="60" y="50" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11.5" font-weight="normal" text-anchor="start" fill="#202124">prompt_token_ids —— add_request 里**一次性**分词得到的 1000 个 id，调度器一开始就知道总长度</text>
+  <rect x="60" y="66" width="128" height="56" rx="4" ry="4" fill="#E8F0FE" stroke="#4285F4" />
+  <text x="124.0" y="90.4846" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#174EA6">chunk #0</text>
+  <text x="124.0" y="107.67280000000001" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#174EA6">[0, 128)</text>
+  <rect x="192" y="66" width="128" height="56" rx="4" ry="4" fill="#E8F0FE" stroke="#4285F4" />
+  <text x="256.0" y="90.4846" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#174EA6">chunk #1</text>
+  <text x="256.0" y="107.67280000000001" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#174EA6">[128, 256)</text>
+  <rect x="324" y="66" width="128" height="56" rx="4" ry="4" fill="#E8F0FE" stroke="#4285F4" />
+  <text x="388.0" y="90.4846" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#174EA6">chunk #2</text>
+  <text x="388.0" y="107.67280000000001" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#174EA6">[256, 384)</text>
+  <rect x="456" y="66" width="128" height="56" rx="4" ry="4" fill="#E8F0FE" stroke="#4285F4" />
+  <text x="520.0" y="90.4846" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#174EA6">chunk #3</text>
+  <text x="520.0" y="107.67280000000001" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#174EA6">[384, 512)</text>
+  <rect x="588" y="66" width="128" height="56" rx="4" ry="4" fill="#E8F0FE" stroke="#4285F4" />
+  <text x="652.0" y="90.4846" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#174EA6">chunk #4</text>
+  <text x="652.0" y="107.67280000000001" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#174EA6">[512, 640)</text>
+  <rect x="720" y="66" width="128" height="56" rx="4" ry="4" fill="#E8F0FE" stroke="#4285F4" />
+  <text x="784.0" y="90.4846" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#174EA6">chunk #5</text>
+  <text x="784.0" y="107.67280000000001" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#174EA6">[640, 768)</text>
+  <rect x="852" y="66" width="128" height="56" rx="4" ry="4" fill="#E8F0FE" stroke="#4285F4" />
+  <text x="916.0" y="90.4846" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#174EA6">chunk #6</text>
+  <text x="916.0" y="107.67280000000001" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#174EA6">[768, 896)</text>
+  <rect x="984" y="66" width="128" height="56" rx="4" ry="4" fill="#FEF7E0" stroke="#F9AB00" stroke-dasharray="6 4" />
+  <text x="1048.0" y="90.4846" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#8A5A00">chunk #7</text>
+  <text x="1048.0" y="107.67280000000001" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="middle" fill="#8A5A00">[896, 1000)</text>
+  <text x="1120" y="142" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="10.5" font-weight="normal" text-anchor="end" fill="#5F6368">chunk_size = 128（配置）→ 1000/128 = 7.8 ⇒ 8 个 chunk，最后一个只有 104 个 token</text>
+  <rect x="60" y="176" width="1060" height="50" rx="6" ry="6" fill="#FFFFFF" stroke="#4285F4" />
+  <text x="74" y="205.9896" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="bold" text-anchor="start" fill="#202124">step 1　forward(#0)　past_kv = None（冷启动）　→　写 pool 位置 0–127　　offset: 0 → 128</text>
+  <rect x="60" y="234" width="1060" height="50" rx="6" ry="6" fill="#FFFFFF" stroke="#4285F4" />
+  <text x="74" y="263.98960000000005" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="bold" text-anchor="start" fill="#202124">step 2　forward(#1)　past_kv = 从 pool 读回 [0,128)　→　写 pool 位置 128–255　　offset: 128 → 256</text>
+  <rect x="60" y="292" width="1060" height="50" rx="6" ry="6" fill="#FFFFFF" stroke="#4285F4" />
+  <text x="74" y="321.9896" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="bold" text-anchor="start" fill="#202124">step 3　forward(#2)　past_kv = 从 pool 读回 [0,256)　→　写 pool 位置 256–383　　offset: 256 → 384</text>
+  <text x="590" y="370" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11.5" font-weight="normal" text-anchor="middle" fill="#5F6368">（中间 4 步省略）　每个 scheduler step 只推进一个 chunk，中间穿插其它序列的 decode</text>
+  <rect x="60" y="396" width="1060" height="50" rx="6" ry="6" fill="#E6F4EA" stroke="#34A853" />
+  <text x="74" y="425.9896" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11" font-weight="bold" text-anchor="start" fill="#0D652D">step 8　forward(#7)　past_kv = 从 pool 读回 [0,896)　→　写 pool 位置 896–999　　offset: 896 → 1000　然后采样首个 token，state → decoding</text>
+  <rect x="60" y="466" width="1060" height="74" rx="6" ry="6" fill="#FCE8E6" stroke="#EA4335" />
+  <text x="590.0" y="498.9014" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11.5" font-weight="bold" text-anchor="middle" fill="#A50E0E">⚠️ chunk 之间是【串行】的，不是并行：chunk N 必须等 chunk N−1 的 KV 算完</text>
+  <text x="590.0" y="517.5314" font-family="Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="11.5" font-weight="normal" text-anchor="middle" fill="#A50E0E">分块的目的不是加速，而是每段之后【让出调度点】——让其它序列的 decode 能插进来</text>
+</svg>
