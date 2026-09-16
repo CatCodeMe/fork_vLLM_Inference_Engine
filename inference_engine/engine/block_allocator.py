@@ -9,6 +9,12 @@ pressure.
 No torch dependency.  No async.  Thread-safe via threading.Lock.
 """
 
+# [LEARN] 类比操作系统虚拟内存：序列看到的是一串连续的"逻辑块"，
+#         底层物理块可以任选。这样就不用为每个序列预留 max_seq_len 的连续空间，
+#         消除外部碎片。block_size=16 意味着每 16 个 token 占一个块。
+# [WHY] 本模块只记"账"（谁占了哪些块、每块用了几个槽），不搬数据；
+#       真正的 KV tensor 读写由 paged_kv_cache.py 负责。职责分离便于测试。
+
 from __future__ import annotations
 
 import threading
@@ -26,6 +32,8 @@ class BlockAllocatorError(Exception):
 class OutOfBlocksError(BlockAllocatorError):
     """Raised when a block allocation request cannot be satisfied."""
 
+    # [TRACE] 这个异常是 Phase 9 抢占的"扳机"：scheduler 捕到它后不杀请求，
+    #         而是调 _try_swap_out_victim() 换个序列出去，再重试分配。
     def __init__(self, requested: int, available: int) -> None:
         super().__init__(
             f"Cannot allocate {requested} blocks — only {available} free"
@@ -51,6 +59,9 @@ class Block:
     block_id: int
     block_size: int                           # max tokens this block can hold
     tokens_used: int = 0                      # how many token slots are filled
+    # [LEARN] ref_count + is_dirty 是为 prefix caching / beam search 留的扩展位：
+    #         多个序列可共享同一块（ref_count>1），is_dirty 表示块已被写过。
+    #         当前版本每条序列独立占块，ref_count 恒为 0 或 1。
     ref_count: int = 0                        # sequences referencing this block
     seq_id: Optional[str] = None             # owning sequence (None = free)
     is_dirty: bool = False                    # True once written to
@@ -98,6 +109,9 @@ class BlockAllocator:
         }
         # Free pool — ordered so pop() takes the last element (LIFO within
         # the pool, but callers see FIFO because we reverse-append on free).
+        # [GOTCHA] allocate() 实际用 pop(0) 从头部取，所以是 FIFO；
+        #         free() 用 append 放到尾部。上面的注释描述的是早期写法，
+        #         以 allocate/free 的实际代码为准。
         self._free_block_ids: list[int] = list(range(num_blocks))
 
         # seq_id → [block_id, ...] in allocation order
@@ -120,6 +134,8 @@ class BlockAllocator:
         OutOfBlocksError
             If the pool does not have *num_blocks* free blocks.
         """
+        # [LEARN] 原子分配：要么一次拿到全部 num_blocks，要么一个都不拿（抛异常）。
+        #         这种"全有或全无"避免了部分分配后失败导致的脏状态。
         if num_blocks <= 0:
             raise ValueError("num_blocks must be greater than zero")
 
@@ -151,6 +167,7 @@ class BlockAllocator:
 
         Returns the number of blocks that were freed (0 if seq_id had none).
         """
+        # [LEARN] 归还时把块内 tokens_used/is_dirty 一并重置，块才能真正被复用。
         with self._lock:
             block_ids = self._seq_to_blocks.pop(seq_id, [])
             count = len(block_ids)
@@ -216,6 +233,9 @@ class BlockAllocator:
         OutOfBlocksError
             If a new block is needed but the pool is exhausted.
         """
+        # [LEARN] 这是 decode 每一步都会调的热函数：把"已用 token 数 + count"
+        #         换算成"需要多少块"，不够就自动新分配。向上取整公式：
+        #         required = ceil(target_tokens / block_size)。
         if count < 0:
             raise ValueError("count must be non-negative")
         if count == 0:
@@ -273,6 +293,8 @@ class BlockAllocator:
 
     def _set_token_count_locked(self, block_ids: list[int], count: int) -> None:
         """Distribute *count* filled slots in block order; caller holds lock."""
+        # [LEARN] 把总 token 数按顺序"填充"到各块：前 n-1 块填满，最后一块填余数。
+        #         例如 count=20, block_size=16 → 块1: 16，块2: 4。
         remaining = count
         for block_id in block_ids:
             tokens_used = min(remaining, self._block_size)
@@ -308,6 +330,9 @@ class BlockAllocator:
         evicted seq_ids.  If fewer than *n* sequences are active, all are
         evicted.
         """
+        # [LEARN] evict_lru / evict_largest 是给上层预留的淘汰策略。注意：
+        #         当前 scheduler 用的是自己的 largest-first 抢占（_try_swap_out_victim
+        #         + CPU 交换），并不直接调这两个方法。
         with self._lock:
             candidates = list(self._seq_to_blocks.keys())
 

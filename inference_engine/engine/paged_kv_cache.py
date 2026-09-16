@@ -9,6 +9,12 @@ No custom CUDA kernels — standard torch tensor indexing throughout.
 No async.  Thread-safe via threading.Lock for cursor mutations.
 """
 
+# [LEARN] 这里是 Phase 7 的"仓库"：一次性申请一整块大 tensor，之后靠索引读写，
+#         推理过程中不再新分配显存。BlockAllocator 告诉你"第 k 个 token 在第几号
+#         物理块"，本模块负责把它映射到 tensor 的具体下标。
+# [WHY] 和 BlockAllocator 分开：allocator 是纯 Python 记账，可单独测试；
+#       本模块才依赖 torch。
+
 from __future__ import annotations
 
 import threading
@@ -54,6 +60,10 @@ class PagedKVCacheManager:
         # ── Single large pre-allocated pool ───────────────────────────────────
         # Shape: [num_blocks, block_size, num_layers, num_kv_heads, head_dim]
         # Allocated ONCE here — never resized during inference.
+        # [LEARN] 维度顺序很有讲究：把 block_size 放在第 2 维，则"取整块"是
+        #         key_pool[block_id]（连续内存），"取块内某 token"是 [block_id, slot]。
+        # [GOTCHA] 这里用的是 GQA：num_kv_heads (2) 远小于 attention heads，
+        #         所以实际 KV 内存比按 head 数算的要小很多。
         self.key_pool: torch.Tensor = torch.zeros(
             [self.num_blocks, self.block_size, self.num_layers,
              self.num_kv_heads, self.head_dim],
@@ -91,6 +101,10 @@ class PagedKVCacheManager:
         value_tensor:
             Shape: [num_kv_heads, head_dim]
         """
+        # [LEARN] 逻辑位置 → 物理位置的核心映射（类比页表）：
+        #   block_idx_in_seq = token_position // block_size  → 这是该序列的第几个块
+        #   slot_within_block = token_position %  block_size  → 块内第几个槽
+        #   再用 block_allocator 把"第几个逻辑块"翻译成"哪个物理块号"。
         block_idx_in_seq = token_position // self.block_size
         slot_within_block = token_position % self.block_size
 
@@ -123,6 +137,8 @@ class PagedKVCacheManager:
 
         Only filled slots (``tokens_used`` on each block) are returned.
         """
+        # [LEARN] 从各块取出"已填满的部分"，按分配顺序拼接成一个连续 KV。
+        #         注意每块只取 :tokens_used，最后一个没填满的块不会把空洞也拼进去。
         block_ids = self.block_allocator.get_blocks(seq_id)
 
         key_slices: list[torch.Tensor] = []
@@ -177,6 +193,9 @@ class PagedKVCacheManager:
 
         Does NOT call block_allocator.free() — the caller is responsible.
         """
+        # [GOTCHA] 调用顺序：先 clear_sequence() 再 block_allocator.free()。
+        #         因为本方法要通过 get_blocks(seq_id) 查块号；free 之后就查不到了。
+        #         完整顺序见 scheduler._resolve_sequence_future()。
         block_ids = self.block_allocator.get_blocks(seq_id)
         for bid in block_ids:
             # In-place zero via slice assignment
@@ -203,6 +222,8 @@ class PagedKVCacheManager:
         Uses ``Tensor.copy_()`` for in-place copy per the Phase 7 spec.
         Wired here for prefix caching / beam search — not invoked in Phase 7.
         """
+        # [LEARN] 块拷贝是 prefix caching（多请求共享相同前缀）和 beam search
+        #         的基础。当前版本还没启用，属于"接口就绪、功能未接"。
         if layer_idx is None:
             # Copy all layers: full [block_size, num_layers, num_kv_heads, head_dim]
             self.key_pool[dst_block_id].copy_(self.key_pool[src_block_id])

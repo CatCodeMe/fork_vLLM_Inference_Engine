@@ -13,6 +13,9 @@ Also provides side-by-side comparison (compare_reports), pretty-printing
 Never raises on empty or all-failed result sets.
 """
 
+# [LEARN] 压测报告聚合：成功率、吞吐、分位数、错误分布，以及两份报告的对比。
+#         纯计算模块，不联网、不读文件（save_report_json 除外）。
+
 from __future__ import annotations
 
 import json

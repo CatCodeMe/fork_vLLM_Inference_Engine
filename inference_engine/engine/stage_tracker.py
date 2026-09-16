@@ -1,5 +1,11 @@
 """Per-stage scheduler timing and throughput statistics."""
 
+# [LEARN] Phase 4 把调度拆成 prefill / decode 两个阶段分别计量，用来验证
+#         "prefill 是计算瓶颈、decode 是带宽瓶颈"。
+# [GOTCHA] scheduler._schedule() 每个 step 都会调 record_prefill/record_decode，
+#         即使该 step 没有 prefill/decode 发生，也会记一条 0。
+#         所以 *_summary 里的平均值会被大量"空转 step"拉低，看趋势而不是绝对值。
+
 from __future__ import annotations
 
 import time
@@ -44,6 +50,8 @@ class StageTracker:
         latency_ms: float,
         budget_tokens: int,
     ) -> None:
+        # [LEARN] budget_utilization = 本步实际 prefill 的 token / 本步预算。
+        #         接近 1 说明 prefill 预算被打满，接近 0 说明被 decode 挤占。
         utilization = tokens_prefilled / budget_tokens if budget_tokens > 0 else 0.0
         record = PrefillRecord(
             timestamp=time.perf_counter(),

@@ -17,6 +17,12 @@ Thread-safe via threading.Lock.  No async anywhere.
 No vLLM / TGI / TensorRT-LLM internals.
 """
 
+# [LEARN] 为什么要 swap 而不是直接报错？GPU 显存迟早会被突发流量耗尽。
+#         直接杀请求 = HTTP 500 / OOM crash；换到 CPU = 用延迟（抢占）换可用性，
+#         序列过会儿再换回来继续生成。这就是"优雅降级"。
+# [WHY] CPU pool 的结构与设备 pool 完全镜像（同样的 block_size / 层数 / head 数），
+#       所以换出/换入只是同类 tensor 的 copy_，不需要重打包。
+
 from __future__ import annotations
 
 import threading
@@ -39,6 +45,8 @@ if TYPE_CHECKING:
 class CPUSwapError(Exception):
     """Raised when the CPU staging pool has insufficient free blocks."""
 
+    # [TRACE] scheduler._try_swap_out_victim() 捕获它并返回 False，表示"这次抢占失败"，
+    #         上层会把这个请求判为 finish_reason="oom"（而不是让整个进程崩掉）。
     def __init__(self, requested: int, available: int) -> None:
         super().__init__(
             f"Cannot swap out — need {requested} CPU blocks, "
@@ -70,6 +78,9 @@ class SwappedSequence:
         How many device blocks the sequence held before swap-out.  Required by
         swap_in() to re-allocate the same number of device blocks.
     """
+
+    # [LEARN] 换出时只存"元数据 + 数据副本"，不保留原物理块号：
+    #         换回来时可以分到任意新块，块号由 block_allocator 重新分配。
 
     seq_id: str
     cpu_block_ids: list[int]
@@ -106,6 +117,8 @@ class CPUSwapManager:
 
         # ── CPU tensor pool — always pinned to CPU regardless of model device ─
         # Shape: [num_cpu_blocks, block_size, num_layers, num_kv_heads, head_dim]
+        # [GOTCHA] device="cpu" 是写死的，和模型跑在 mps 还是 cuda 无关；
+        #         这就是"把 KV 暂存到主机内存"的字面意思。
         self.cpu_key_pool: torch.Tensor = torch.zeros(
             [
                 num_cpu_blocks,
@@ -169,6 +182,8 @@ class CPUSwapManager:
         """
         num_needed = len(device_block_ids)
 
+        # [LEARN] 锁只保护"记账"（抢 CPU 块号），真正的 tensor copy 放在锁外，
+        #         避免长时间持锁阻塞其他线程。
         with self._lock:
             if seq_id in self._swapped:
                 raise ValueError(f"seq_id={seq_id!r} is already swapped out")
@@ -204,6 +219,10 @@ class CPUSwapManager:
         num_tokens = block_allocator.num_tokens_for_seq(seq_id)
 
         # Zero device pool slots AFTER copying data (spec requirement)
+        # [TRACE] 换出的关键三步，顺序不能变：
+        #   1) clear_sequence —— 清零设备池中该序列的槽（此时块号还在）
+        #   2) block_allocator.free —— 归还设备块（设备侧正式腾空）
+        #   3) 登记 _swapped —— 以后靠它把序列换回来
         paged_kv_cache.clear_sequence(seq_id)
         # Release device blocks
         block_allocator.free(seq_id)
@@ -265,6 +284,8 @@ class CPUSwapManager:
             raise KeyError(f"seq_id={seq_id!r} is not currently swapped out")
 
         # Try to claim device blocks — let OutOfBlocksError propagate
+        # [GOTCHA] 换入可能因为设备仍然不够而失败。此时本管理器"状态不变"
+        #         （CPU 数据还在 _swapped 里），由调用方决定何时重试。
         device_block_ids: list[int] = block_allocator.allocate(
             seq_id, swapped.original_num_blocks
         )
@@ -288,6 +309,8 @@ class CPUSwapManager:
 
         with self._lock:
             # Return CPU blocks to the free pool
+            # [TRACE] 换入收尾：把 CPU 暂存块全部归还，并从 _swapped 删除，
+            #         序列重回 decoding（由 scheduler 改 state）。
             self._free_cpu_block_ids.extend(swapped.cpu_block_ids)
             del self._swapped[seq_id]
             self._total_swap_ins += 1

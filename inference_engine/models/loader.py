@@ -11,6 +11,10 @@ Key design decisions
   very slow; float32 is the right default.
 """
 
+# [LEARN] 三种设备各有一套加载策略，这是为了避开各自平台的坑。
+# [GOTCHA] transformers 5.x 用 `dtype=`，4.x 用 `torch_dtype=`；
+#          升级/降级版本时这里最容易报错或静默变成 float32。
+
 from __future__ import annotations
 
 import logging
@@ -49,6 +53,8 @@ def load_model_and_tokenizer(config: Config) -> LoadedModel:
     )
 
     # Ensure a pad token exists (some models omit it).
+    # [GOTCHA] Qwen 等模型没有 pad_token；不补的话 batch padding 会报错。
+    #         本引擎目前单序列前向，但下游用 pad 做 batching 时会依赖这一行。
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
 
@@ -66,6 +72,8 @@ def load_model_and_tokenizer(config: Config) -> LoadedModel:
         # Load to CPU first, then move to MPS in one shot.
         # device_map="auto" on MPS can silently dispatch ops to CPU (float32
         # fallback), which corrupts memory measurements.
+        # [WHY] 先 CPU 后整体 .to("mps")，不用 device_map——否则部分算子会落到 CPU。
+        # [GOTCHA] 注释里写 torch_dtype 是因为这是通用叫法；实际参数名是 dtype。
         model = AutoModelForCausalLM.from_pretrained(
             model_name,
             dtype=torch.float16,
@@ -77,6 +85,7 @@ def load_model_and_tokenizer(config: Config) -> LoadedModel:
 
     else:  # cpu
         # float16 matmuls on CPU are emulated → very slow. Use float32.
+        # [LEARN] CPU 上 fp16 矩阵乘是软件模拟的，反而更慢，所以用 fp32。
         model = AutoModelForCausalLM.from_pretrained(
             model_name,
             dtype=torch.float32,
@@ -90,7 +99,7 @@ def load_model_and_tokenizer(config: Config) -> LoadedModel:
     logger.info(
         "Model ready. Parameters: %s M | dtype: %s",
         f"{sum(p.numel() for p in model.parameters()) / 1e6:.1f}",
-        next(model.parameters()).dtype,
+        next(model.parameters()).dtype,  # 第一个参数的 dtype（详见 sequential.prefill 的 next() 注释）
     )
 
     return LoadedModel(model=model, tokenizer=tokenizer, device=device)

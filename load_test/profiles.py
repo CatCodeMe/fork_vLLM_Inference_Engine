@@ -10,6 +10,11 @@ Three profiles:
   burst_load     — groups of simultaneous requests at fixed intervals
 """
 
+# [LEARN] Phase 11 的"压测流量发生器"：只生成调度计划（什么时间发哪个请求），
+#         不发请求；真正的发送在 runner.py，统计在 report.py。
+# [GOTCHA] ramp_load 的调度公式是"线性速率的积分逆函数"，数学上正确；
+#         如果直接线性插值时间会得到错误的速率曲线。
+
 from __future__ import annotations
 
 import uuid
@@ -34,6 +39,9 @@ class LoadRequest:
     scheduled_send_time
         Seconds from test start when this request should be dispatched.
     """
+
+    # [LEARN] scheduled_send_time 是相对测试起点的秒数，不是绝对时间；
+    #         runner 再加上 test_start 得到 perf_counter 目标时刻。
 
     request_id: str
     prompt: str

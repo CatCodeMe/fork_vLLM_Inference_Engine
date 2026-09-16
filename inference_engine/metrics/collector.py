@@ -11,6 +11,10 @@ Design
   that can be loaded by downstream analysis scripts.
 """
 
+# [LEARN] 这是 Phase 1（顺序服务）那套最简单的"指标收集器"：存最近 N 条结果、
+#         算分位数、写 JSON。Phase 10 的 MetricsAggregator 会读它做统一报表。
+# [WHY] 用 deque(maxlen=N) 而不是 list：内存有上界，旧的自动丢弃。
+
 from __future__ import annotations
 
 import json
@@ -79,6 +83,8 @@ class MetricsCollector:
         tps_arr = np.array([r.tokens_per_second for r in results], dtype=float)
 
         def pcts(arr: np.ndarray) -> dict:
+            # [LEARN] P50/P95/P99 用 numpy.percentile 线性插值；
+            #         样本很少时（比如只有 1 条）三个分位数都等于该值。
             return {
                 "p50": float(np.percentile(arr, 50)),
                 "p95": float(np.percentile(arr, 95)),
@@ -110,6 +116,9 @@ class MetricsCollector:
         Called by the FastAPI lifespan shutdown handler so that the file is
         always written even if the server is terminated gracefully.
         """
+        # [GOTCHA] 这个方法在 Phase 1 服务器关闭时被调用，默认写到
+        #         config.metrics_output_path（baseline_metrics.json），
+        #         会覆盖仓库里已提交的基准文件！调试时请改 METRICS_OUTPUT_PATH。
         results = self.get_all()
         summary = self.compute_summary()
 

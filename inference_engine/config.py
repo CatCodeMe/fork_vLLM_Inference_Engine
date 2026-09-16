@@ -5,6 +5,11 @@ All tuneable parameters live here. Import Config from this module everywhere els
 so there is exactly one source of truth.
 """
 
+# [LEARN] 这是全项目的"配置单一来源"：其余模块都 import Config，不自己读环境变量。
+#         调参/复现实验时只看这一个文件即可。
+# [TRACE] 优先级：dataclass 默认值 < 环境变量（__post_init__ 里覆盖）。
+#         例：MODEL_NAME / DEVICE / MAX_BATCH_SIZE / KV_NUM_BLOCKS ...
+
 from __future__ import annotations
 
 import os
@@ -18,6 +23,8 @@ def _auto_detect_device() -> str:
     Priority: cuda > mps > cpu.
     MPS is available on Apple Silicon with PyTorch >= 2.0.
     """
+    # [LEARN] 本项目的硬件无关性就在这里：没有 CUDA 也能跑，Mac 用 MPS，
+    #         否则纯 CPU（float32，慢但可用）。
     try:
         import torch
 
@@ -95,6 +102,8 @@ class Config:
     def __post_init__(self) -> None:
         # Allow environment variable overrides for common settings so the
         # server can be configured without code changes.
+        # [LEARN] 环境变量覆盖发生在对象构造时；所以 server 每次启动 new 一个 Config()
+        #         就能拿到最新环境变量（模块末尾的单例 default_config 只读一次）。
         if env_model := os.environ.get("MODEL_NAME"):
             self.model_name = env_model
         if env_device := os.environ.get("DEVICE"):

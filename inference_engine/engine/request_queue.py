@@ -41,6 +41,14 @@ from typing import List, Optional
 
 from inference_engine.engine.sequence import Sequence
 
+# [LEARN] RequestQueue 解决的是"请求排队与背压"：
+#         - 队列满了 → QueueFullError → 服务层转成 HTTP 503（快速失败，不拖垮引擎）
+#         - 等太久还没被调度 → expired，future 抛 asyncio.TimeoutError → HTTP 504
+# [WHY] 用普通 list 而不是 asyncio.Queue：因为超时扫描需要遍历整个队列（O(n)），
+#       而取队首是 O(1) 的 pop(0)；asyncio.Queue 不提供这两种能力。
+# [GOTCHA] 所有操作都在"调度器所在的事件循环"里调用，所以用 asyncio.Lock 即可，
+#         不需要线程锁。
+
 
 # ── Exception ─────────────────────────────────────────────────────────────────
 
@@ -48,6 +56,8 @@ from inference_engine.engine.sequence import Sequence
 class QueueFullError(Exception):
     """Raised by RequestQueue.enqueue() when the queue has reached maxsize."""
 
+    # [TRACE] 这个异常会一直冒泡到 server/app_v2.py 的 endpoint_generate，
+    #         在那里被翻译成 HTTP 503 "Server at capacity, retry later"。
     def __init__(self, maxsize: int) -> None:
         super().__init__(f"Request queue is full ({maxsize} requests waiting)")
         self.maxsize = maxsize
@@ -79,6 +89,11 @@ class QueuedRequest:
 
     sequence: Sequence
     enqueue_time: float
+    # [LEARN] future 是"请求生命周期"的信号灯：服务器层 await 它，谁把它 set_* ，
+    #         谁就决定了这个 HTTP 请求最终返回 成功 / 504 / 取消。
+    #         - 超时   → set_exception(asyncio.TimeoutError)
+    #         - 取消   → set_exception(asyncio.CancelledError)
+    #         - 成功   → 由 scheduler._resolve_sequence_future() set_result(seq)
     future: asyncio.Future
     priority: int = 0
 
@@ -118,6 +133,23 @@ class RequestQueue:
 
     # ── Enqueue ───────────────────────────────────────────────────────────────
 
+    # [LEARN] 为什么 enqueue 是 async？先排除一个常见误解：**它不是为了性能**。
+    #         实测 async + lock 的净开销 ≈ 418 ns（裸 list.append 32 ns），
+    #         而一次 decode forward ≈ 24 ms —— 占比 2e-5，测都测不出来。
+    #
+    #         它存在的理由是「约定」：整个类都用 async with self._lock，等于在
+    #         代码里声明「本对象只允许在事件循环里访问」。
+    #
+    # [GOTCHA] 而且要注意：enqueue / dequeue / expire_timed_out / cancel **四个方法
+    #         的临界区里一个 await 都没有** —— 所有 await 都在 async with self._lock
+    #         *之前*。单事件循环下，acquire→release 之间没有挂起点，其他协程根本没
+    #         机会插进来，所以这把锁其实**永远不会真正竞争**。它是「访问边界的声明」，
+    #         不是「互斥实现」。
+    #
+    #         真正的价值是防未来 bug：一旦有人往临界区里加一个 await（写盘、上报
+    #         指标、换成 Redis/磁盘队列），当前写法自动正确，而同步写法会静默出错
+    #         （被交错执行）。另外也别指望把它换成 threading.Lock 就能保护什么 ——
+    #         队列从未被 to_thread 访问过，跨线程场景需要的是完全不同的设计。
     async def enqueue(
         self,
         sequence: Sequence,
@@ -145,6 +177,7 @@ class RequestQueue:
             If ``len(_queue) >= maxsize`` at the time of enqueue.
         """
         # Reclaim stale capacity before rejecting a new request.
+        # [WHY] 先清理超时请求再判满，避免"其实已经过期但还占着名额"导致误报 QueueFull。
         await self.expire_timed_out()
 
         async with self._lock:
@@ -153,6 +186,8 @@ class RequestQueue:
 
             loop = asyncio.get_event_loop()
             fut: asyncio.Future = loop.create_future()
+            # [GOTCHA] 这里只是创建 future，真正 set_result 的是调度器；
+            #         如果请求永远没被调度，就会由 expire_timed_out / cancel 来收尾。
 
             item = QueuedRequest(
                 sequence=sequence,
@@ -184,6 +219,9 @@ class RequestQueue:
         async with self._lock:
             if not self._queue:
                 return None
+            # [LEARN] pop(0) = 从队头取，保证 FIFO（先来先服务）。
+            # [TRACE] 注意：这里不增加 _total_admitted，真正的 admit 记账在
+            #         scheduler._schedule() 调用 mark_admitted() 时发生。
             item = self._queue.pop(0)
             return item
 
@@ -228,6 +266,9 @@ class RequestQueue:
                 else:
                     still_waiting.append(item)
 
+            # [LEARN] 惰性过期（lazy expiry）：只在 enqueue / dequeue 时扫描，
+            #         不额外起定时器。优点是简单、无后台任务；缺点是超时精度
+            #         取决于调度器调用这些方法的频率。
             self._queue = still_waiting
 
         return expired_count
@@ -248,6 +289,8 @@ class RequestQueue:
             for i, item in enumerate(self._queue):
                 if item.sequence.seq_id == seq_id:
                     # Only cancel if still in a cancellable state
+                    # [GOTCHA] 已经 decoding/finished 的序列不在这里取消：它们已经
+                    #         在调度器里跑了，取消要由调度器路径负责，否则状态会打架。
                     if item.sequence.state not in ("expired", "cancelled",
                                                    "decoding", "finished"):
                         item.sequence.state = "cancelled"

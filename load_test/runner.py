@@ -10,6 +10,10 @@ Concurrency is bounded by an asyncio.Semaphore to avoid overwhelming the
 OS with too many open connections.
 """
 
+# [LEARN] 压测执行器：为每个 LoadRequest 起一个协程，等到它的 scheduled_send_time
+#         再发 POST /generate，用 Semaphore 限制并发连接数。
+# [GOTCHA] 所有网络异常都被捕获转成失败的 RequestResult，_send_one 从不抛异常。
+
 from __future__ import annotations
 
 import asyncio
@@ -54,6 +58,9 @@ class RequestResult:
     completed_at
         ``time.time()`` when the response or terminal error was received.
     """
+
+    # [LEARN] total_latency_ms 优先用服务器返回的值，缺失时回退到客户端实测耗时；
+    #         所以它混合了"服务端统计"和"端到端"两种口径，对比时要留意。
 
     request_id: str
     success: bool
